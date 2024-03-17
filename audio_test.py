@@ -22,7 +22,24 @@ import os
 import simpleaudio as sa
 
 # Assuming 'result.choices[0].message.content' contains the text you want to convert to speech
-test = "did this go through"
+
+PROMPT_MESSAGES = [
+    {
+        'role': 'user',
+        'content': "'S'il vous plait dit moi quel'que chose tres stereotypique sur le france"
+    }
+]
+
+params = {
+    "model": "gpt-3.5-turbo",
+    "messages": PROMPT_MESSAGES,
+    "max_tokens": 500,
+}
+
+
+result = client.chat.completions.create(**params)
+print(result)
+
 response = requests.post(
     "https://api.openai.com/v1/audio/speech",
     headers={
@@ -30,7 +47,7 @@ response = requests.post(
     },
     json={
         "model": "tts-1-1106",
-        "input": test,  # Assuming you want to use the 'test' variable here
+        "input": result.choices[0].message.content,  
         "voice": "onyx",
     },
 )
