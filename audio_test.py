@@ -26,7 +26,7 @@ import simpleaudio as sa
 PROMPT_MESSAGES = [
     {
         'role': 'user',
-        'content': "'S'il vous plait dit moi quel'que chose tres stereotypique sur le france"
+        'content': "tell me that everything is going to be alright but do it with a jamaiacan patois sounding like bob marley"
     }
 ]
 
