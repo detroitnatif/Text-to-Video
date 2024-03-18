@@ -2,7 +2,7 @@ from openai import OpenAI
 import base64
 from dotenv import load_dotenv
 import os
-
+import json
 
 load_dotenv()
 model = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
@@ -14,7 +14,18 @@ def image_b64(image):
 
 b64_image = image_b64("screenshot.jpg")
 
-# prompt = input("prompt: ")
+prompt = input("prompt: ")
+message_to_gpt = [
+        {
+            "role": "system",
+            'content': "You are a web crawler, your job is to give a url to go to in order to find the answer to the question. Respond in the following JSON format{\"url\": \"<put url here>\"}"
+        },
+
+        {
+            'role': 'user',
+            'content': prompt
+        }
+    ],
 
 response_gpt4_vision = model.chat.completions.create(model='gpt-4-vision-preview',
     messages=[
@@ -27,7 +38,7 @@ response_gpt4_vision = model.chat.completions.create(model='gpt-4-vision-preview
                 },
                 {
                     'type': 'text',
-                    'text': 'what does this page include, make sure to include personal details like age?'
+                    'text': 'what does this page include, make sure to include all details?'
                 }
             ]
         }
@@ -45,18 +56,12 @@ specific_question = f"Based on this description: \"{image_description}\", how ol
 # Make the new query to GPT-3.5 with the specific follow-up question
 response_gpt3_turbo = model.chat.completions.create(
     model='gpt-3.5-turbo',
-    messages=[
-        {
-            "role": "assistant",
-            'content': image_description
-        },
-
-        {
-            'role': 'user',
-            'content': 'using only the data given to you, how old is sam altman?'
-        }
-    ]
+    messages= message_to_gpt,
+    max_tokens=300,
+    response_format={'type': 'json_object'}
 )
 
 # Print the GPT-3.5 model's response to the specific question
 print("GPT-3.5 Response:", response_gpt3_turbo.choices[0].message.content)
+response_json = json.loads(response_gpt3_turbo.content)
+url = response_json['url']

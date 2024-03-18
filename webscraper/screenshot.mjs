@@ -18,7 +18,7 @@ import puppeteer from 'puppeteer'
         }
     );
 
-    await page.goto('https://en.wikipedia.org/wiki/Sam_Altman', {
+    await page.goto('https://www.accuweather.com/en/fr/paris/623/weather-forecast', {
         waitUntil: 'networkidle0'
     });
 
