@@ -6,7 +6,7 @@ import json
 import subprocess
 from PIL import Image
 import io
-wha
+
 
 load_dotenv()
 model = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
@@ -107,6 +107,7 @@ response_gpt4_vision = model.chat.completions.create(
 # Assuming this is your intended logic for handling the response
 if response_gpt4_vision.choices:
     if "ANSWER_NOT_FOUND" in response_gpt4_vision.choices[0].message.content:
+        print("ANSWER NOT FOUND")
         message_to_gpt.append({
             'role': 'user',
             'content': 'i was unable to find the answer on that website, pick another one'

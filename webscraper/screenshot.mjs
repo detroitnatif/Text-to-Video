@@ -24,14 +24,11 @@ const url = process.argv[2];
     );
 
     await page.goto( url, {
-        waitUntil: 'domcontentloaded'
+        waitUntil: 'networkidle0',
+        timeout: 10000,
+        
     });
 
-    await new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve();
-        }, 4000);
-    });
     
 
     await page.screenshot({
