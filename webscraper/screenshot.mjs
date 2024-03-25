@@ -1,4 +1,9 @@
+"use strict";
+
 import puppeteer from 'puppeteer'
+
+
+const url = process.argv[2];
 
 (async () => {
 
@@ -18,9 +23,16 @@ import puppeteer from 'puppeteer'
         }
     );
 
-    await page.goto('https://www.accuweather.com/en/fr/paris/623/weather-forecast', {
-        waitUntil: 'networkidle0'
+    await page.goto( url, {
+        waitUntil: 'domcontentloaded'
     });
+
+    await new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve();
+        }, 4000);
+    });
+    
 
     await page.screenshot({
         path: 'screenshot.jpg'
