@@ -29,6 +29,11 @@ const url = process.argv[2];
         
     });
 
+    await new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve();
+        }, 4000);
+    });
     
 
     await page.screenshot({
