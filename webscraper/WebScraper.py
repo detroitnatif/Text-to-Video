@@ -56,10 +56,9 @@ while True:
     
     try:
         # Run the subprocess with a timeout
-        result = subprocess.run(['node', 'screenshot.mjs', url], timeout=15)
+        result = subprocess.run(['node', 'screenshot.mjs', url], timeout=30)
         print('result', result)
-        print('out', result.stdout)
-        print('error', result.stderr)
+    
         if result.returncode != 0:
             print('failed')
             raise Exception("Subprocess failed")
