@@ -6,6 +6,11 @@ import warnings
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
+elevenlabs_key = os.environ.get("ELEVENLABS_API_KEY")
+
+narration_api = 'elevenlabs' # 'openai'
+
+
 def parse(narration):
     output = []
     paragraphs = narration.split('\n')
