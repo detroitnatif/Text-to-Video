@@ -2,6 +2,7 @@ from openai import OpenAI
 import os
 from dotenv import load_dotenv
 import narration
+import json
 
 load_dotenv()
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
@@ -39,6 +40,15 @@ response =  client.chat.completions.create(
     ]
 
 )
-print(response.choices[0].message.content)
-data = narration.parse(response.choices[0].message.content)
+response = response.choices[0].message.content
+
+data = narration.parse(response)
 narration.create(data, 'narration.mp3')
+
+
+with open('response.txt', 'w') as f:
+    f.write(response)
+
+with open('data.json', 'w') as f:
+    json.dump(data, f)
+

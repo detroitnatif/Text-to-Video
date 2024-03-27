@@ -9,7 +9,7 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 def parse(narration):
     output = []
     paragraphs = narration.split('\n')
-    print('paragraphs ', paragraphs)
+
     for paragraph in paragraphs:
         if paragraph.startswith("Narrator: "):
             text = paragraph.replace("Narrator: ", '')
@@ -26,8 +26,6 @@ def parse(narration):
                  'description': background}
             )
     
-    print()
-    print("output  ", output)
     return output
     
 def create(data, output_file):
@@ -36,7 +34,7 @@ def create(data, output_file):
         if element['type'] != 'text':
             continue
         narration += element['content'] + '\n\n'
-    print('narration ',  narration)
+   
     audio = openai.audio.speech.create(
         input=narration,
         model='tts-1',
