@@ -22,7 +22,7 @@ def resize_and_compress_image(image_path, output_size=(500, 350), quality=75):
     :return: Base64-encoded string of the resized and compressed image.
     """
     with Image.open(image_path) as img:
-        img = img.resize(output_size, Image.ANTIALIAS)
+        img = img.resize(output_size)
         with io.BytesIO() as buf:
             img.save(buf, format='JPEG', quality=quality)
             byte_data = buf.getvalue()
