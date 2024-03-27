@@ -40,4 +40,5 @@ response =  client.chat.completions.create(
 
 )
 print(response.choices[0].message.content)
-narration.create(response.choices[0].message.content)
+data = narration.parse(response.choices[0].message.content)
+narration.create(data, 'narration.mp3')
