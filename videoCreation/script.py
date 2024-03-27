@@ -1,6 +1,7 @@
 from openai import OpenAI
 import os
 from dotenv import load_dotenv
+import narration
 
 load_dotenv()
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
@@ -20,13 +21,15 @@ response =  client.chat.completions.create(
             
             respond with the following format with however many steps of the recipe:
 
-            1) [Description of image first Ingredient and step]
+            1) [Background image: Description of image first Ingredient and step]
 
             Narrator: "A few sentences of the cooking step details"
 
-            2) [Description of image second Ingredient and step]
+            2) [Background image: Description of image second Ingredient and step]
 
             Narrator: "How to do this step of cooking with details"
+
+            ... continue for all the steps
             '''
         },
         {
@@ -36,5 +39,5 @@ response =  client.chat.completions.create(
     ]
 
 )
-
 print(response.choices[0].message.content)
+narration.create(response.choices[0].message.content)
