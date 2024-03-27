@@ -2,14 +2,22 @@ import playsound
 import os
 import openai
 import warnings
-
+from elevenlabs.client import ElevenLabs
+from elevenlabs import play, stream, save
+import subprocess
+import random
+import requests
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 elevenlabs_key = os.environ.get("ELEVENLABS_API_KEY")
 
-narration_api = 'elevenlabs' # 'openai'
+narration_api = 'openai' # 'elevenlabs'
 
+
+client = ElevenLabs(
+  api_key=elevenlabs_key
+)
 
 def parse(narration):
     output = []
@@ -39,12 +47,19 @@ def create(data, output_file):
         if element['type'] != 'text':
             continue
         narration += element['content'] + '\n\n'
-   
-    audio = openai.audio.speech.create(
-        input=narration,
-        model='tts-1',
-        voice='alloy'
-    )
-    audio.stream_to_file(output_file)
-    # playsound.playsound('audio.mp3')
-    # os.remove('audio.mp3')
+  
+    if narration_api == 'openai':
+        audio = openai.audio.speech.create(
+            input=narration,
+            model='tts-1',
+            voice='alloy'
+        )
+        audio.stream_to_file(output_file)
+    else:
+        audio = client.generate(
+            text=narration,
+            voice='Grace'
+        
+        )
+        play(audio)
+        save(audio, output_file)
