@@ -20,7 +20,7 @@ def create_from_data(data):
 def generate(prompt="POV like youve got a GoPro on looking down while cutting cutting an onion", output_file='creation.webp'):
     response =  client.images.generate(
         model='dall-e-3',
-        prompt=prompt,
+        prompt='create POV images as if you were doing the action looking down ' + prompt,
         size='1024x1024',
         quality='standard',
         n=1,
@@ -30,4 +30,4 @@ def generate(prompt="POV like youve got a GoPro on looking down while cutting cu
 
     with open(output_file, 'wb') as f:
         f.write(base64.b64decode(image_b64))
-    return output_file
+    # return output_file

@@ -3,12 +3,13 @@ import os
 from dotenv import load_dotenv
 import narration
 import json
+import images
 
 load_dotenv()
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 elevenlabs_key = os.environ.get("ELEVENLABS_API_KEY")
 
-narration_api = 'elevenlabs' # 'openai'
+narration_api = 'openai' # 'elevenlabs' 
 
 with open("source_material.txt") as f:
     source_material = f.read()
@@ -57,4 +58,6 @@ with open('data.json', 'w') as f:
 
 if not os.path.exists('images'):
     os.makedirs('images')
+
+images.create_from_data(data)
 
