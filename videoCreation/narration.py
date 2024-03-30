@@ -42,7 +42,7 @@ def parse(narration):
     return output
     
 def create(data, output_folder):
-    if not os.path.exists('output_folder'):
+    if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 
     n = 0
