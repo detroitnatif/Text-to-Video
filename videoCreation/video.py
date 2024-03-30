@@ -6,19 +6,20 @@ import math
 import subprocess
 
 
-def images_to_video(image_folder, video_name, fade_time=2000):
+def images_to_video(image_folder, avi_video_name, output_file, fade_time=2000 ):
     """
     Combines images from a folder into a video, applying a blending effect between images.
 
     Parameters:
     - image_folder: Path to the folder containing the images.
-    - video_name: The output video file name (including path and extension).
-    - fps: Frames per second for the output video.
+    - avi_video_name: The output video file name (including path and extension).
+    - fade_time: Frames per second for the output video.
+    - output_file: Where mp4 video is saved.
     """
     wait_time = 2000
     width, height = 1024, 1792
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
-    video = cv2.VideoWriter(video_name, fourcc, fade_time, (width, height))
+    video = cv2.VideoWriter(avi_video_name, fourcc, fade_time, (width, height))
 
     # Sort images to ensure correct order
     image_paths = sorted(os.listdir(image_folder))
@@ -43,13 +44,15 @@ def images_to_video(image_folder, video_name, fade_time=2000):
 
     
     video.release()
-    subprocess.run('ffmpeg', '-i', video, 'narration.mp3')
+    ffmpeg_command = ['ffmpeg', '-i', avi_video_name, '-i', 'narration.mp3', '-map', '0:v', '-map', '1:a', '-c:v', 'copy','-c:a', 'aac', '-strict', '-experimental', '-shortest', output_file]
+
+    subprocess.run(ffmpeg_command)
 
 # Example usage
 images_folder = 'images'  # Ensure this is the correct path to your images
 video_name = 'cooking_video.avi'  # Specify the full name including extension
-fade_time = 30  # Frames per second
-
-images_to_video(images_folder, video_name, fade_time)
+fade_time = 3000  # Frames per second
+mp4 = 'cooking_with_audio.mp4'
+images_to_video(images_folder, video_name ,mp4, fade_time=3000)
 
 
