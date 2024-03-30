@@ -41,25 +41,30 @@ def parse(narration):
     
     return output
     
-def create(data, output_file):
-    narration = ''
+def create(data, output_folder):
+    if not os.path.exists('output_folder'):
+        os.makedirs(output_folder)
+
+    n = 0
     for element in data:
         if element['type'] != 'text':
             continue
-        narration += element['content'] + '\n\n'
-  
-    if narration_api == 'openai':
-        audio = openai.audio.speech.create(
-            input=narration,
-            model='tts-1',
-            voice='alloy'
-        )
-        audio.stream_to_file(output_file)
-    else:
-        audio = client.generate(
-            text=narration,
-            voice='Grace'
         
-        )
-        play(audio)
-        save(audio, output_file)
+        n += 1
+        output_file = os.path.join(output_folder, f'narration_{n}.mp3')
+
+        if narration_api == 'openai':
+            audio = openai.audio.speech.create(
+                input= element['content'],
+                model='tts-1',
+                voice='alloy'
+            )
+            audio.stream_to_file(output_file)
+        else:
+            audio = client.generate(
+                text= element['content'],
+                voice='Grace'
+            
+            )
+            
+            save(audio, output_file)

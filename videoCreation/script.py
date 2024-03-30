@@ -47,7 +47,7 @@ response =  client.chat.completions.create(
 response = response.choices[0].message.content
 
 data = narration.parse(response)
-narration.create(data, 'narration.mp3')
+narration.create(data, 'narration')
 
 with open('response.txt', 'w') as f:
     f.write(response)
