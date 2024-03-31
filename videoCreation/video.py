@@ -34,9 +34,17 @@ def images_to_video(image_folder, avi_video_name, output_file, fps=30 ):
     # Sort images to ensure correct order
     image_paths = sorted(os.listdir(image_folder))
     full_narration = AudioSegment.empty()
-    for i in range(len(image_paths) - 1):
+
+
+    
+
+    for i, img in enumerate(image_paths):
         image1 = cv2.imread(os.path.join(image_folder, image_paths[i]))
-        image2 = cv2.imread(os.path.join(image_folder, image_paths[i + 1]))
+
+        if i < len(image_paths) - 1:
+            image2 = cv2.imread(os.path.join(image_folder, image_paths[i + 1]))
+        else:
+            image2 = cv2.imread(os.path.join(image_folder, image_paths[0]))
 
         # Ensure the images are resized or cropped to fit the video dimensions
         image1 = cv2.resize(image1, (width, height))
@@ -46,7 +54,7 @@ def images_to_video(image_folder, avi_video_name, output_file, fps=30 ):
         full_narration += (AudioSegment.from_file(narration))
         duration = get_audio_duration(narration) 
 
-        frames_for_image = int((duration / 1000) * fps)
+        frames_for_image = int((duration / 1000) * fps) - fps
 
         for i in range(frames_for_image):
             vertical_video_frame = np.zeros((height, width, 3), dtype=np.uint8)
@@ -65,12 +73,11 @@ def images_to_video(image_folder, avi_video_name, output_file, fps=30 ):
     ffmpeg_command = ['ffmpeg', '-i', avi_video_name, '-i', 'full_narration.mp3', '-map', '0:v', '-map', '1:a', '-c:v', 'copy','-c:a', 'aac', '-strict', '-experimental', '-shortest', output_file]
 
     subprocess.run(ffmpeg_command)
+    os.remove(avi_video_name)
 
 # Example usage
 images_folder = 'images'  # Ensure this is the correct path to your images
 video_name = 'cooking_video.avi'  # Specify the full name including extension
 fps = 30  # Frames per second
-mp4 = 'cooking_with_audio_again.mp4'
+mp4 = 'cooking_with_audio_encore.mp4'
 images_to_video(images_folder, video_name ,mp4, fps)
-
-
