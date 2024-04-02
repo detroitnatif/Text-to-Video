@@ -97,11 +97,12 @@ with open(file_path, 'r') as file:
 
 
 
-images_folder = 'images'  # Ensure this is the correct path to your images
-video_name = 'cooking_video_china.avi'  # Specify the full name including extension
-fps = 30  # Frames per second
-mp4 = 'cooking_with_captions.mp4'
-images_to_video(images_folder, video_name ,mp4,data_json, fps)
+# images_folder = 'images'  # Ensure this is the correct path to your images
+# video_name = 'cooking_video_china.avi'  # Specify the full name including extension
+# fps = 30  # Frames per second
+# mp4 = 'cooking_with_captions.mp4'
+# images_to_video(images_folder, video_name ,mp4,data_json, fps)
+
 
 
 
