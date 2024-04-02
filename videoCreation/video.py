@@ -19,7 +19,7 @@ def get_audio_duration(audio_file):
     return length_in_milliseconds
 
 
-def images_to_video(image_folder, avi_video_name, output_file, data_json, output_dir, fps=30):
+def images_to_video(image_folder, avi_video_name, output_file, data_json, output_dir, name, fps=30):
     """
     Combines images from a folder into a video, applying a blending effect between images.
 
@@ -35,7 +35,7 @@ def images_to_video(image_folder, avi_video_name, output_file, data_json, output
     width, height = 1024, 1792
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
 
-    avi_video_path = os.path.join(output_dir, avi_video_name)  # Changed line
+    avi_video_path = os.path.join(name, avi_video_name)  # Changed line
     video = cv2.VideoWriter(avi_video_path, fourcc, fps, (width, height))  # Adjusted to use avi_video_path
 
     # Sort images to ensure correct order
@@ -55,7 +55,7 @@ def images_to_video(image_folder, avi_video_name, output_file, data_json, output
         image1 = cv2.resize(image1, (width, height))
         image2 = cv2.resize(image2, (width, height))
 
-        narration = os.path.join('narration', f'narration_{i+1}.mp3')  # Unchanged, assumes 'narration' is a subfolder in the current directory
+        narration = os.path.join(name, 'narration', f'narration_{i+1}.mp3')  # Unchanged, assumes 'narration' is a subfolder in the current directory
         full_narration += AudioSegment.from_file(narration)
         duration = get_audio_duration(narration)
 
@@ -66,11 +66,11 @@ def images_to_video(image_folder, avi_video_name, output_file, data_json, output
             vertical_video_frame[:image1.shape[0], :] = image1
 
             text_no_quotes = text_items[i].strip('"')
-            bullet_points = text_no_quotes.split('. ')
-            bullet_points = [point for point in bullet_points if point]  # Remove any empty strings
-            formatted_text = '\n'.join(f"\n- {point}" if not point.endswith('.') else f"\n- {point[:-1]}" for point in bullet_points)
+            # bullet_points = text_no_quotes.split('. ')
+            # bullet_points = [point for point in bullet_points if point]  # Remove any empty strings
+            # formatted_text = '\n'.join(f"\n- {point}" if not point.endswith('.') else f"\n- {point[:-1]}" for point in bullet_points)
 
-            text.write_text(formatted_text,vertical_video_frame)
+            text.write_text(text_no_quotes,vertical_video_frame)
 
             video.write(vertical_video_frame)
         
@@ -88,7 +88,7 @@ def images_to_video(image_folder, avi_video_name, output_file, data_json, output
 
     subprocess.run(ffmpeg_command)
 
-    os.remove(avi_video_path) 
+    # os.remove(avi_video_path) 
 
 
 

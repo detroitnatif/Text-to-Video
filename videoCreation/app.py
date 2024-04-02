@@ -31,15 +31,12 @@ st.write("### Create your own Video")
 requested_recipe = st.text_input(label="What would you like to eat?")
 
 if requested_recipe:
-    script.run(requested_recipe)
-# if requested_recipe is not None:
-   
-#     input_image = Image.open(uploaded_file)
-#     input_image = input_image.resize((256, 256), Image.Resampling.LANCZOS)
-#     st.image(input_image, caption='Uploaded Image.', use_column_width=True, width=200)
-#     output_image = "../images/output-images/" + style_name + "-" + uploaded_file.name
-
-# model = '../saved_models/' + style_name + ".pth"
+    recipe_name = script.run(requested_recipe)
+    if recipe_name is not None:
+        path = os.path.join(recipe_name, 'video.mp4')
+        video_file = open(path, 'rb')
+        video_bytes = video_file.read()
+        st.video(video_bytes)
 # st.write(model)
 
 # clicked = st.button("# Stylize Image")
