@@ -4,7 +4,7 @@ import pandas as pd
 import io
 from io import StringIO
 import os
-
+import script
 
 st.title("Text-to-Recipe")
 
@@ -13,7 +13,7 @@ img = st.sidebar.selectbox(
     (None, "amber.jpg", 'pizza.jpeg'),
     )
 
-style_name = st.sidebar.selectbox(
+recipes = st.sidebar.selectbox(
     "Choose an image",
     ("candy",'mosaic', 'rain_princess', 'udnie')
     )
@@ -43,7 +43,7 @@ clicked = st.button("# Stylize Image")
 
 if clicked:
     
-    model = style.load_model(model)
+    model = script.load_model(model)
     style.stylize(model, input_image, output_image)
     st.write("### Output Image:")
     styled_image = Image.open(output_image)
