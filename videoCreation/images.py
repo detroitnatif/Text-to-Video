@@ -8,14 +8,14 @@ import base64
 load_dotenv()
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
-def create_from_data(data):
+def create_from_data(data, name):
     image_num = 0
     for element in data:
         if element['type'] != 'image':
             continue
         image_num += 1
         image_name = f'image_{image_num}.webp'
-        generate(element['description'], os.path.join('images', image_name))
+        generate(element['description'], os.path.join(name, 'images', image_name))
 
 def generate(prompt="POV like youve got a GoPro on looking down while cutting cutting an onion", output_file='creation.webp'):
     response =  client.images.generate(

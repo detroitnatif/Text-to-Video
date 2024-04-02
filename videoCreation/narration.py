@@ -41,9 +41,11 @@ def parse(narration):
     
     return output
     
-def create(data, output_folder):
-    if not os.path.exists(output_folder):
-        os.makedirs(output_folder)
+def create(data, name, output_folder):
+
+    narration_file_path = os.path.join(name, output_folder)
+    if not os.path.exists(narration_file_path):
+        os.makedirs(narration_file_path)
 
     n = 0
     for element in data:
@@ -51,7 +53,7 @@ def create(data, output_folder):
             continue
         
         n += 1
-        output_file = os.path.join(output_folder, f'narration_{n}.mp3')
+        output_file = os.path.join(narration_file_path, f'narration_{n}.mp3')
 
         if narration_api == 'openai':
             audio = openai.audio.speech.create(

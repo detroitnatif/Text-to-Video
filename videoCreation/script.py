@@ -18,6 +18,39 @@ narration_api = 'openai' # 'elevenlabs'
 # user_input = input("what would you like to eat?: ")
 # print('received input')
 def run(prompt):
+    name_response =  client.chat.completions.create(
+            model='gpt-3.5-turbo',
+            messages=[
+                {
+                    'role':'system',
+                    'content': ''' Your job is to read the prompt and name it using the convention of words connected by _ like these examples:
+                    Example 1) Question: I want to make chinese chicken Response: chinese_chicken
+                    Example 2) Question: I want to make quiche lorraine Response: quiche_lorraine
+
+                    '''
+                },
+                {
+                    'role': 'user',
+                    'content': f'Given this prompt: {prompt}, write me a name summarizing the recipe that is lowercase and connected with _ '
+                }
+            ]
+
+        )
+    name = name_response.choices[0].message.content
+
+    if not os.path.exists(f'{name}'):
+        os.makedirs(f'{name}')
+    
+    # with open('data.json', 'r') as f:
+    #     data_json = json.load(f)
+
+    # img_path = f"/Users/tylerklimas/Desktop/openaisandbox/videoCreation/images/{name}"
+    # # imgs_paths = sorted(os.listdir(img_path))
+    # fps = 30 
+    # mp4 = f'{name}.mp4'
+
+    # video.images_to_video(img_path, f'cooking_with_captions_{name}.mp4', mp4, data_json, fps)
+
     response_1 =  client.chat.completions.create(
             model='gpt-3.5-turbo',
             messages=[
@@ -29,17 +62,19 @@ def run(prompt):
                 },
                 {
                     'role': 'user',
-                    'content': f'create a Youtube Short narration based for the following {user_input}, emphasizing the exact steps of the recipe: '
+                    'content': f'create a Youtube Short narration based for the following input: {prompt}, please emphasize the exact steps of the recipe: '
                 }
             ]
 
         )
     response_recipe = response_1.choices[0].message.content
 
-    with open("recipe.txt", "w") as file:
+    recipe_file_path = os.path.join(name, "recipe.txt")
+
+    with open(recipe_file_path, "w") as file:
         file.write(response_recipe)
 
-    with open("recipe.txt") as f:
+    with open(recipe_file_path) as f:
         source_material = f.read()
 
     response =  client.chat.completions.create(
@@ -75,26 +110,30 @@ def run(prompt):
     response = response.choices[0].message.content
 
     data = narration.parse(response)
-    narration.create(data, 'narration')
+    narration.create(data, name, 'narration')
 
-    with open('response.txt', 'w') as f:
+    os.path.join(name, 'data.json')
+    
+    with open(os.path.join(name, 'response.txt'), 'w') as f:
         f.write(response)
 
-    with open('data.json', 'w') as f:
+    with open(os.path.join(name, 'data.json'), 'w') as f:
         json.dump(data, f)
 
-    with open('data.json', 'r') as f:
+    with open(os.path.join(name, 'data.json'), 'r') as f:
         data_json = json.load(f)
 
-    if not os.path.exists('images'):
-        os.makedirs('images')
 
-    images.create_from_data(data)
+    os.path.join(name, 'images')
+    if not os.path.exists(os.path.join(name, 'images')):
+        os.makedirs(os.path.join(name, 'images'))
 
-    img_path = "/Users/tylerklimas/Desktop/openaisandbox/videoCreation/images"
+    images.create_from_data(data, name)
+
+    img_path = f"/Users/tylerklimas/Desktop/openaisandbox/videoCreation/{name}images"
     # imgs_paths = sorted(os.listdir(img_path))
     fps = 30 
-    mp4 = 'cooking_with_captions_chinese_num2.mp4'
+    mp4 = f'cooking_with_captions_{name}.mp4'
 
     video.images_to_video(img_path, 'cooking_with_captions_chinese.mp4', mp4, data_json, fps)
 
