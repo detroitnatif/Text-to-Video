@@ -1,6 +1,6 @@
 from openai import OpenAI
 import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 import narration
 import json
 import images
