@@ -100,13 +100,3 @@ if len(api_key) > 40:
 
 
 
-# clicked = st.button("# Stylize Image")
-
-# if clicked:
-    
-#     model = script.load_model(model)
-#     style.stylize(model, input_image, output_image)
-#     st.write("### Output Image:")
-#     styled_image = Image.open(output_image)
-#     st.image(styled_image, width=400)
-
