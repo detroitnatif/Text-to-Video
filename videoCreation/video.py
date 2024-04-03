@@ -94,7 +94,7 @@ def images_to_video(image_folder, avi_video_name, output_file, data_json, output
     except subprocess.CalledProcessError as e:
         print(f"ffmpeg command failed: {e}")
 
-    videos_folder_path = '/Users/tylerklimas/Desktop/openaisandbox/videoCreation/videos'
+    videos_folder_path = 'videoCreation/videos'
     new_file_path = os.path.join(videos_folder_path, f"{name}.mp4")
 
 # Copy the video file to the new location with the new filename
