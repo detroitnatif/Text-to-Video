@@ -1,45 +1,63 @@
 import cv2
-
+import numpy as np
 
 def write_text(text, frame):
+    import cv2  # Ensure cv2 is imported
+
     font = cv2.FONT_HERSHEY_SIMPLEX
     white_color = (255, 255, 255)
     black_color = (0, 0, 0)
-    thickness = 2  # Reduced thickness for better fit
+    thickness = 2  # Adjust thickness for better visibility
     initial_font_scale = 1  # Start with a default font scale
     border = 5
+    line_spacing = 10  # Space between lines
 
-    # Start with an initial font scale and decrease until the text fits the frame
+    # Dynamically adjust font scale to fit text
     font_scale = initial_font_scale
-    text_width = 0
-    text_height = 0
     max_width = frame.shape[1]
     max_height = frame.shape[0]
-    while True:
-        # Calculate the size of the text at the current font scale
-        text_size = cv2.getTextSize(text, font, font_scale, thickness)[0]
-        text_width, text_height = text_size
-        # Break the loop if the text fits within the frame dimensions or if font scale is too small
-        if text_width <= max_width and text_height <= max_height or font_scale <= 0.1:
-            break
-        # Decrease the font scale to try a smaller size
-        font_scale -= 0.1
 
-    text_x = (max_width - text_width) // 2
-    text_y = (max_height + text_height) // 2  # Adjusted for vertical centering
-    org = (text_x, text_y)
+    # Split text into words
+    words = text.split()
+    lines = []
+    current_line = ""
+    for word in words:
+        # Check if adding the next word exceeds line width
+        test_line = f"{current_line} {word}".strip()
+        text_size = cv2.getTextSize(test_line, font, font_scale, thickness)[0]
+        if text_size[0] <= max_width:
+            current_line = test_line
+        else:
+            lines.append(current_line)
+            current_line = word
+    lines.append(current_line)  # Add the last line
 
-    # Draw the background for the text (optional, for better visibility)
-    frame = cv2.rectangle(frame, (text_x - border, text_y - text_height - border), 
-                          (text_x + text_width + border, text_y + border), 
-                          black_color, -1)
+    # Calculate total text block height
+    text_height_total = 0
+    for line in lines:
+        text_size = cv2.getTextSize(line, font, font_scale, thickness)[0]
+        text_height_total += text_size[1] + line_spacing
+    text_height_total -= line_spacing  # Remove extra space after the last line
 
-    # Draw the text with a border (optional)
-    frame = cv2.putText(frame, text, org, font, font_scale, black_color, thickness + border, cv2.LINE_AA)
-    
-    # Finally, draw the text
-    frame = cv2.putText(frame, text, org, font, font_scale, white_color, thickness, cv2.LINE_AA)
+    # Calculate the starting Y position so that the text appears in the bottom third of the frame
+    # Adjust the calculation for the starting Y position to move the text block to the bottom third
+    third_height = max_height * 2 // 3
+    text_y_start = max(third_height, max_height - text_height_total - border)  # Ensure text block starts within the bottom third
 
+    for line in lines:
+        text_size = cv2.getTextSize(line, font, font_scale, thickness)[0]
+        text_x = (max_width - text_size[0]) // 2
+        text_y = text_y_start + text_size[1]
+        org = (text_x, text_y)
+
+        # Draw the text with a background for better visibility
+        frame = cv2.rectangle(frame, (text_x - border, text_y_start - border), 
+                              (text_x + text_size[0] + border, text_y + border), 
+                              black_color, -1)
+        frame = cv2.putText(frame, line, org, font, font_scale, white_color, thickness, cv2.LINE_AA)
+
+        # Move to the next line
+        text_y_start += text_size[1] + line_spacing
 
 
 

@@ -5,22 +5,15 @@ import io
 from io import StringIO
 import os
 import script
-
-
+from time import sleep
 
 st.set_page_config(page_title='Text-to-Video')
-
-# img = st.sidebar.selectbox(
-#     "Choose an image",
-#     (None, "amber.jpg", 'pizza.jpeg'),
-#     )
-
-
 
 duke_blue = "#00539B"
 st.markdown(f"""
 <h1 style='text-align: center; color: Black; font-size: 50px;'>RapidRecipe</h1>
 <style>
+    /* Existing styles */
     .caption-style {{
         color: grey;
         text-align: center;
@@ -39,64 +32,86 @@ st.markdown(f"""
         border-color:  {duke_blue} !important;
         border-width: 1.5px !important;
     }}
-    /* Updated selector to target all buttons within Streamlit apps */
     .stButton>button {{
         display: inline-block;
         background-color: white;
-        border: 2px solid #BEC2D1;;
+        border: 2px solid #BEC2D1;
         padding: 5px;
         margin: 2px;
         cursor: pointer;
         color: #9599B3;
         border-radius: 5px;
-        width: 300px; /* Ensures equal width */
-        height: 120px; /* Ensures equal height */
-        text-align: center; /* Center text */
-        line-height: 40px; /* Adjust line height for vertical alignment */
+        width: 300px;
+        height: 120px;
+        text-align: center;
+        line-height: 40px;
     }}
 
-    
     .stButton>button:hover {{
-        background-color: #f0f0f0; /* Changes background to light grey */
-        color: {duke_blue}; /* Keeps the text color the same */
-        border: 2px solid grey; /* Keeps the border color the same */
+        background-color: #f0f0f0;
+        color: {duke_blue};
+        border: 2px solid grey;
     }}
-        .stButton {{
+    .stButton {{
         margin-left: 20px !important;
     }}
-    
+    .stVideo {{
+        margin-left: 20px !important;
+        height: 600px;
+    }}
+    .stTextInput label {{
+        color: black !important;
+    }}
+
+    /* Custom CSS for changing password widget color */
+    .stTextInput input[type="password"] {{
+        color: blue !important;
+    }}
+
+    /* Change sidebar background color */
+    .css-1aumxhk {{
+        background-image: linear-gradient({duke_blue}, {duke_blue});
+        color: white;
+    }}
+
 </style>
-<p class='caption-style' style='font-size: 24px; color: black;'>Create recipe videos</p>
+<p class='caption-style' style='font-size: 24px; color: black;'>Create recipe videos using OpenAI</p>
 """, unsafe_allow_html=True)
 
+
+# Placeholders for later use
+video_placeholder = st.empty()
+create_video_placeholder = st.empty()
+
 recipes = st.sidebar.selectbox(
-    "Choose a recipe",
-    (None, "Chinese Chicken", 'Falafel', 'Steak au Poivre')
-    )
+    "Choose a generated recipe, or create your own!",
+    (None, "Indian Butter Chicken", "Fajitas", "Chinese Chicken Thighs", 'Falafel', 'Steak au Poivre')
+)
 
 if recipes:
     formatted_recipes = recipes.lower().replace(" ", "_") + ".mp4"
     path = 'videos/' + formatted_recipes
     video_file = open(path, 'rb')
     video_bytes = video_file.read()
-    st.video(video_bytes)
+    video_placeholder.video(video_bytes)
 
-
-
-st.write("### Create your own Video")
-api_key = st.text_input("Enter your OpenAI API Key:", type="password")
-
+# create_video_placeholder.markdown("<h3 style='color: black;'>Create your own Video</h3>", unsafe_allow_html=True)
+# Now placing the API key input at the bottom
+api_key = st.text_input("Enter your OpenAI API Key:")
 
 if len(api_key) > 40:
     requested_recipe = st.text_input(label="What would you like to eat?")
 
     if requested_recipe:
-        recipe_name = script.run(requested_recipe, api_key)
-        if recipe_name is not None:
-            path = os.path.join(recipe_name, 'video.mp4')
-            video_file = open(path, 'rb')
-            video_bytes = video_file.read()
-            st.video(video_bytes)
+            loading_message = st.empty() 
+            loading_message.markdown("<h3 style='color: black;'>Your video is being made...</h3>", unsafe_allow_html=True)
 
-
-
+            recipe_name = script.run(requested_recipe, api_key)
+            if recipe_name is not None:
+                path = os.path.join(recipe_name, 'video.mp4')
+                video_file = open(path, 'rb')
+                video_bytes = video_file.read()
+                
+                loading_message.empty()  
+                
+                st.video(video_bytes)
