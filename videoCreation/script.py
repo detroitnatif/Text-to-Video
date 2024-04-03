@@ -146,17 +146,17 @@ Narrator: "After simmering, serve hot, and enjoy your delectable stuffed cabbage
     with open(os.path.join(name, 'data.json'), 'r') as f:
         data_json = json.load(f)
 
-
+    print(os.path.join(name, 'images'))
     if not os.path.exists(os.path.join(name, 'images')):
         os.makedirs(os.path.join(name, 'images'))
 
     images.create_from_data(data, name, api_key)
 
-    img_path = f"/Users/tylerklimas/Desktop/openaisandbox/videoCreation/{name}/images"
+    img_path = f"videoCreation/{name}/images"
     # imgs_paths = sorted(os.listdir(img_path))
     fps = 30 
     mp4 = f'cooking_with_captions_{name}.mp4'
-    output_dir = f'/Users/tylerklimas/Desktop/openaisandbox/videoCreation/{name}'
+    output_dir = f'videoCreation/{name}'
 
     video.images_to_video(img_path, 'video_no_sound.avi', 'video.mp4', data_json, output_dir, name, fps=30)
 

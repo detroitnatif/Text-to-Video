@@ -104,7 +104,7 @@ if len(api_key) > 40:
 
     if requested_recipe:
             loading_message = st.empty() 
-            loading_message.markdown("<h3 style='color: black;'>Your video is being made...</h3>", unsafe_allow_html=True)
+            loading_message.markdown("<h3 style='color: black;'>Your video is in the oven...</h3>", unsafe_allow_html=True)
 
             recipe_name = script.run(requested_recipe, api_key)
             if recipe_name is not None:
