@@ -90,7 +90,7 @@ recipes = st.sidebar.selectbox(
 
 if recipes:
     formatted_recipes = recipes.lower().replace(" ", "_") + ".mp4"
-    path = 'videos/' + formatted_recipes
+    path = 'videoCreation/videos/' + formatted_recipes
     video_file = open(path, 'rb')
     video_bytes = video_file.read()
     video_placeholder.video(video_bytes)
