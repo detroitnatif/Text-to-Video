@@ -10,7 +10,7 @@ import video
 # load_dotenv()
 
 def run(prompt, api_key):
-    load_dotenv()
+    # load_dotenv()
     client = OpenAI(api_key=api_key)
     # elevenlabs_key = os.environ.get("ELEVENLABS_API_KEY")
 
