@@ -150,7 +150,7 @@ Narrator: "After simmering, serve hot, and enjoy your delectable stuffed cabbage
     if not os.path.exists(os.path.join(name, 'images')):
         os.makedirs(os.path.join(name, 'images'))
 
-    images.create_from_data(data, name)
+    images.create_from_data(data, name, api_key)
 
     img_path = f"/Users/tylerklimas/Desktop/openaisandbox/videoCreation/{name}/images"
     # imgs_paths = sorted(os.listdir(img_path))
