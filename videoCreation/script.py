@@ -39,7 +39,7 @@ def run(prompt, api_key):
     if not os.path.exists(f'{name}'):
         os.makedirs(f'{name}')
         print(os.path.exists(f'{name}'))
-
+    return os.path.exists(f'{name}')
     exit()
     response_1 =  client.chat.completions.create(
             model='gpt-3.5-turbo',
