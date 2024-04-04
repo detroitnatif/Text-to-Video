@@ -1,0 +1,42 @@
+[
+  {
+    "type": "image",
+    "description": "A head of cabbage in a large pot of boiling water"
+  },
+  {
+    "type": "text",
+    "content": "\"Boil a pot of water, then soften a cabbage head in it for 5-7 minutes. Remove and let cool.\""
+  },
+  {
+    "type": "image",
+    "description": "Bowl of mixed ground beef, rice, onion, garlic, and spices"
+  },
+  {
+    "type": "text",
+    "content": "\"Combine ground beef, rice, onion, garlic, spices to make the stuffing mixture for the cabbage rolls.\""
+  },
+  {
+    "type": "image",
+    "description": "Cabbage leaf being filled with the beef mixture"
+  },
+  {
+    "type": "text",
+    "content": "\"Carefully fill cabbage leaves with the beef mixture, then roll them up ensuring the sides are tucked in.\""
+  },
+  {
+    "type": "image",
+    "description": "Cabbage rolls placed in a pot with tomato sauce and diced tomatoes"
+  },
+  {
+    "type": "text",
+    "content": "\"Place cabbage rolls in a pot, pour over tomato sauce, diced tomatoes, season, then cover and simmer for 45-60 minutes.\""
+  },
+  {
+    "type": "image",
+    "description": "Delicious stuffed cabbage rolls ready to be served"
+  },
+  {
+    "type": "text",
+    "content": "\"After simmering, serve hot, and enjoy your delectable stuffed cabbage rolls!\""
+  }
+]
