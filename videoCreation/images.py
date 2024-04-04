@@ -15,7 +15,6 @@ def create_from_data(data, name, api_key="You must give an API key to use"):
             continue
         image_num += 1
         image_name = f'image_{image_num}.webp'
-        print(os.path.join(name, 'images', image_name))
         generate(element['description'], os.path.join(name, 'images', image_name), api_key=api_key)
 
 def generate(prompt="POV like youve got a GoPro on looking down while cutting cutting an onion", output_file='creation.webp', api_key="You must give an API key to use"):

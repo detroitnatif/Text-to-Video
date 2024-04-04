@@ -35,14 +35,10 @@ def run(prompt, api_key):
 
         )
     name = name_response.choices[0].message.content
-    print('this is the name', name)
+
     if not os.path.exists(f'{name}'):
         os.makedirs(f'{name}')
-        print('please', os.path.exists(f'{name}'))
-    exists = os.path.exists(f'{name}')
-    exists_str = str(exists).lower()
-    return exists_str
-    exit()
+ 
     response_1 =  client.chat.completions.create(
             model='gpt-3.5-turbo',
             messages=[
@@ -138,7 +134,7 @@ Narrator: "After simmering, serve hot, and enjoy your delectable stuffed cabbage
 
     data = narration.parse(response)
     narration.create(data, name, 'narration', api_key)
-    print("is this working")
+
     
     with open(os.path.join(name, 'response.txt'), 'w') as f:
         f.write(response)
@@ -149,7 +145,7 @@ Narrator: "After simmering, serve hot, and enjoy your delectable stuffed cabbage
     with open(os.path.join(name, 'data.json'), 'r') as f:
         data_json = json.load(f)
 
-    print(os.path.join(name, 'images'))
+
     if not os.path.exists(os.path.join(name, 'images')):
         os.makedirs(os.path.join(name, 'images'))
 
