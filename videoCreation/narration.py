@@ -43,7 +43,7 @@ def parse(narration):
     
 def create(data, name, output_folder, api_key):
 
-    narration_file_path = os.path.join(name, output_folder)
+    narration_file_path = os.path.join('videoCreation', name, output_folder)
     if not os.path.exists(narration_file_path):
         os.makedirs(narration_file_path)
 
