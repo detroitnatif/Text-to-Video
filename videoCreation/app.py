@@ -85,7 +85,7 @@ create_video_placeholder = st.empty()
 
 recipes = st.sidebar.selectbox(
     "Choose a generated recipe, or create your own!",
-    (None, "Indian Butter Chicken", "Fajitas", "Chinese Chicken Thighs", 'Falafel', 'Steak au Poivre')
+    (None, "Indian Butter Chicken", "Fajitas", "Chinese Chicken", 'Falafel', 'Steak au Poivre')
 )
 
 if recipes:

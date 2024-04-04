@@ -135,7 +135,7 @@ Narrator: "After simmering, serve hot, and enjoy your delectable stuffed cabbage
 
     data = narration.parse(response)
     narration.create(data, name, 'narration', api_key)
-
+    print("is this working")
     
     with open(os.path.join(name, 'response.txt'), 'w') as f:
         f.write(response)
@@ -152,11 +152,11 @@ Narrator: "After simmering, serve hot, and enjoy your delectable stuffed cabbage
 
     images.create_from_data(data, name, api_key)
 
-    img_path = f"videoCreation/{name}/images"
+    img_path = f"{name}/images"
     # imgs_paths = sorted(os.listdir(img_path))
     fps = 30 
     mp4 = f'cooking_with_captions_{name}.mp4'
-    output_dir = f'videoCreation/{name}'
+    output_dir = f'{name}'
 
     video.images_to_video(img_path, 'video_no_sound.avi', 'video.mp4', data_json, output_dir, name, fps=30)
 

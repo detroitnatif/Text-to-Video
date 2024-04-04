@@ -82,9 +82,9 @@ def caption(video, output_video, text, narration_time):
     out.release()
 
 
-input_video = '/Users/tylerklimas/Desktop/openaisandbox/videoCreation/cooking_with_audio_plus.mp4'
-cap = cv2.VideoCapture(input_video)
+# input_video = '/Users/tylerklimas/Desktop/openaisandbox/videoCreation/cooking_with_audio_plus.mp4'
+# cap = cv2.VideoCapture(input_video)
 
-fourcc = cv2.VideoWriter_fourcc(*'XVID')
-output_video = 'withtranscript.avi'
-out = cv2.VideoWriter(output_video, fourcc, 30.0, (int(cap.get(3)), int(cap.get(4))))
+# fourcc = cv2.VideoWriter_fourcc(*'XVID')
+# output_video = 'withtranscript.avi'
+# out = cv2.VideoWriter(output_video, fourcc, 30.0, (int(cap.get(3)), int(cap.get(4))))
