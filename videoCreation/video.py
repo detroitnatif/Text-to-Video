@@ -57,7 +57,7 @@ def images_to_video(image_folder, avi_video_name, output_file, data_json, output
         image1 = cv2.resize(image1, (width, height))
         image2 = cv2.resize(image2, (width, height))
 
-        narration = os.path.join(name, 'narration', f'narration_{i+1}.mp3')  # Unchanged, assumes 'narration' is a subfolder in the current directory
+        narration = os.path.join('videoCreation', name, 'narration', f'narration_{i+1}.mp3')  # Unchanged, assumes 'narration' is a subfolder in the current directory
         full_narration += AudioSegment.from_file(narration)
         duration = get_audio_duration(narration)
 
