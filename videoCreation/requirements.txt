@@ -8,4 +8,4 @@ elevenlabs==1.0.0b1
 requests==2.31.0
 opencv-python-headless==4.9.0.80
 ffmpeg-python==0.2.0
-ffprobe==0.5
+ffprobe-python==0.5
