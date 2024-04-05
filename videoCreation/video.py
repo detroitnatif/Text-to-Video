@@ -9,6 +9,15 @@ import json
 import text
 import shutil
 
+# Set the paths for ffmpeg and ffprobe
+ffmpeg_path = "/usr/bin/ffmpeg"
+ffprobe_path = "/usr/bin/ffprobe"
+
+# Configure pydub to use the specified ffmpeg and ffprobe
+AudioSegment.converter = ffmpeg_path
+AudioSegment.ffprobe = ffprobe_path
+
+
 
 def get_audio_duration(audio_file):
     # Load the audio file
