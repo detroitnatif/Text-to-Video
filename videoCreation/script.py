@@ -142,7 +142,7 @@ Narrator: "After simmering, serve hot, and enjoy your delectable stuffed cabbage
     with open(os.path.join(name, 'data.json'), 'w') as f:
         json.dump(data, f)
 
-    with open(os.path.join('videoCreation', name, 'data.json'), 'r') as f:
+    with open(os.path.join(name, 'data.json'), 'r') as f:
         data_json = json.load(f)
 
 
