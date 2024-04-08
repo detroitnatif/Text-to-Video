@@ -164,5 +164,5 @@ Narrator: "After simmering, serve hot, and enjoy your delectable stuffed cabbage
 
     done = video.images_to_video(img_path, 'video_no_sound.avi', 'video.mp4', data_json, output_dir, name, fps=30)
 
-    return name
+    return (True, name)
 

@@ -108,13 +108,14 @@ if len(api_key) > 40:
             loading_message = st.empty() 
             loading_message.markdown("<h3 style='color: black;'>Your video is in the oven...</h3>", unsafe_allow_html=True)
 
-            recipe_name = script.run(requested_recipe, api_key)
-            st.write('finished')
-            # if recipe_name is not None:
-            path = os.path.join(recipe_name, 'video.mp4')
-            video_file = open(path, 'rb')
-            video_bytes = video_file.read()
-            
-            loading_message.empty()  
-            
-            st.video(video_bytes)
+            success, recipe_name = script.run(requested_recipe, api_key)
+            if success:
+                st.write('finished')
+                # if recipe_name is not None:
+                path = os.path.join(recipe_name, 'video.mp4')
+                video_file = open(path, 'rb')
+                video_bytes = video_file.read()
+                
+                loading_message.empty()  
+                
+                st.video(video_bytes)
