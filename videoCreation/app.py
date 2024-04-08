@@ -7,7 +7,7 @@ import os
 import script
 from time import sleep
 
-st.set_page_config(page_title='Text-to-Video', page_icon=':movie_camera:')
+st.set_page_config(page_title='Text-to-Video', page_icon='🎥')
 base_path = os.environ.get('OPENAI_SANDBOX_BASE_PATH', '')
 
 duke_blue = "#00539B"
