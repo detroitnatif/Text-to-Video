@@ -1,0 +1,66 @@
+[
+  {
+    "type": "image",
+    "description": "all the ingredients on a kitchen counter from **Fajitas Recipe:**"
+  },
+  {
+    "type": "text",
+    "content": "\"Here are all the ingredients you'll need for the flavorful fajitas: chicken breast, onions, red and green bell peppers, vegetable oil, fajita seasoning, tortillas, and optional toppings like sour cream, guacamole, and shredded cheese.\""
+  },
+  {
+    "type": "image",
+    "description": "Sizzling chicken breast cooking in a skillet"
+  },
+  {
+    "type": "text",
+    "content": "\"Heat vegetable oil in a skillet, then cook the sliced chicken breast until it's beautifully browned and fully cooked.\""
+  },
+  {
+    "type": "image",
+    "description": "Onions and bell peppers sizzling with chicken in the skillet"
+  },
+  {
+    "type": "text",
+    "content": "\"Push the chicken to the side, add onions and bell peppers to the skillet, and cook until they reach that perfect tender-crisp texture.\""
+  },
+  {
+    "type": "image",
+    "description": "Sprinkling fajita seasoning over the chicken and veggies"
+  },
+  {
+    "type": "text",
+    "content": "\"Sprinkle the aromatic fajita seasoning over the chicken, onions, and peppers. Let the flavors combine and cook for a couple more minutes.\""
+  },
+  {
+    "type": "image",
+    "description": "Tortillas heating up on a separate skillet"
+  },
+  {
+    "type": "text",
+    "content": "\"In another skillet, warm up the tortillas until they are soft and pliable, ready to be filled with the delicious fajita mixture.\""
+  },
+  {
+    "type": "image",
+    "description": "Fajita mixture being placed onto warm tortillas"
+  },
+  {
+    "type": "text",
+    "content": "\"Serve the flavorful chicken, onions, and peppers mixture onto the warm tortillas, ensuring every bite is a burst of flavor.\""
+  },
+  {
+    "type": "image",
+    "description": "Various toppings like sour cream, guacamole, and shredded cheese"
+  },
+  {
+    "type": "text",
+    "content": "\"Enhance your fajitas with your favorite toppings; sour cream, guacamole, shredded cheese, or anything that delights your taste buds.\""
+  },
+  {
+    "type": "image",
+    "description": "Rolled-up fajitas on a plate ready to be served"
+  },
+  {
+    "type": "text",
+    "content": "\"Roll up the tortillas, and there you have it - a plate of delicious homemade fajitas, ready to be enjoyed!\""
+  }
+]

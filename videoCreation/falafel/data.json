@@ -1,0 +1,41 @@
+[
+  {
+    "type": "image",
+    "description": "A can of chickpeas and fresh parsley being prepared"
+  },
+  {
+    "type": "text",
+    "content": "\"Start by combining drained chickpeas, fresh parsley, chopped onion, garlic, cumin, coriander, cayenne pepper, salt, and pepper in a food processor. Pulse until finely chopped.\""
+  },
+  { "type": "image", "description": "Bowl of falafel mixture with flour" },
+  {
+    "type": "text",
+    "content": "\"Transfer the mixture to a bowl, add flour gradually until a non-sticky ball forms. Adjust flour as needed for the right consistency.\""
+  },
+  {
+    "type": "image",
+    "description": "Frying pan with vegetable oil heating up"
+  },
+  {
+    "type": "text",
+    "content": "\"Heat vegetable oil in a pan, shape the falafel mixture into balls or patties while waiting for the oil to heat up.\""
+  },
+  { "type": "image", "description": "Falafel frying in hot oil" },
+  {
+    "type": "text",
+    "content": "\"Carefully fry the falafel in batches for 3-5 minutes per side until they turn golden brown and crispy. Avoid overcrowding the pan for even frying.\""
+  },
+  { "type": "image", "description": "Golden brown falafel on a paper towel" },
+  {
+    "type": "text",
+    "content": "\"Once fried, remove falafel from oil and place them on a paper towel-lined plate to absorb excess oil.\""
+  },
+  {
+    "type": "image",
+    "description": "Falafel served with pita bread, tahini sauce, and salad"
+  },
+  {
+    "type": "text",
+    "content": "\"Finally, serve the hot falafel with pita bread, tahini sauce, salad, and your favorite toppings. Enjoy your delicious homemade falafel!\""
+  }
+]
