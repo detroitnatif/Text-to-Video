@@ -9,6 +9,7 @@ import json
 import text
 import shutil
 import streamlit as st
+import ffmpeg
 
 # Set the paths for ffmpeg and ffprobe
 ffmpeg_path = "/usr/bin/ffmpeg"
@@ -17,6 +18,34 @@ ffprobe_path = "/usr/bin/ffprobe"
 # Configure pydub to use the specified ffmpeg and ffprobe
 AudioSegment.converter = ffmpeg_path
 AudioSegment.ffprobe = ffprobe_path
+
+import ffmpeg
+import os
+
+def merge_audio_video(avi_video_path, full_narration_path, output_file_path):
+    """
+    Merge AVI video and MP3 narration into a final MP4 video using ffmpeg-python.
+
+    Parameters:
+    - avi_video_path: Path to the AVI video file.
+    - full_narration_path: Path to the MP3 narration audio file.
+    - output_file_path: Path for the output MP4 video file.
+    """
+    try:
+        # Input streams
+        video_input = ffmpeg.input(avi_video_path)
+        audio_input = ffmpeg.input(full_narration_path)
+        
+        # Merge video and audio with the specified output format and codec options
+        (
+            ffmpeg
+            .output(video_input['v'], audio_input['a'], output_file_path, vcodec='copy', acodec='aac', strict='experimental', shortest=None)
+            .run(overwrite_output=True)
+        )
+        print("Video processing completed successfully.")
+    except ffmpeg.Error as e:
+        print(f"ffmpeg command failed: {e.stderr.decode()}")
+
 
 
 
