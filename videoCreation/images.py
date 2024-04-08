@@ -16,7 +16,8 @@ def create_from_data(data, name, api_key="You must give an API key to use"):
         image_num += 1
         image_name = f'image_{image_num}.webp'
         generate(element['description'], os.path.join(name, 'images', image_name), api_key=api_key)
-
+        if image_num == 4:
+            break
 def generate(prompt="POV like youve got a GoPro on looking down while cutting cutting an onion", output_file='creation.webp', api_key="You must give an API key to use"):
     client = OpenAI(api_key=api_key)
     response =  client.images.generate(
