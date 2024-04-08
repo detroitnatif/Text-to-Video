@@ -18,36 +18,6 @@ AudioSegment.converter = ffmpeg_path
 AudioSegment.ffprobe = ffprobe_path
 
 
-import subprocess
-import concurrent.futures
-
-def run_ffmpeg(command, timeout):
-    """
-    Runs an ffmpeg command with a specified timeout using concurrent futures for subprocess.run.
-
-    Parameters:
-    - command: The ffmpeg command to run as a list of arguments.
-    - timeout: Timeout in seconds.
-
-    Returns:
-    - success: Boolean indicating if the command completed successfully before the timeout.
-    - output: The output (stdout or stderr) from the ffmpeg command.
-    """
-    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
-        future = executor.submit(subprocess.run, command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        try:
-            result = future.result(timeout=timeout)
-            success = (result.returncode == 0)
-            output = result.stdout if result.stdout else result.stderr
-        except concurrent.futures.TimeoutError:
-            success = False
-            output = "ffmpeg command was terminated due to timeout."
-            # Attempt to cancel the future if it is still running.
-            future.cancel()
-    
-    return success, output
-
-
 
 def get_audio_duration(audio_file):
     # Load the audio file
@@ -128,11 +98,14 @@ def images_to_video(image_folder, avi_video_name, output_file, data_json, output
     ffmpeg_command = ['ffmpeg', '-i', avi_video_path, '-i', full_narration_path, '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-c:a', 'aac', '-strict', '-experimental', '-shortest', output_file_path]  # Adjusted to use avi_video_path and output_file_path
 
     try:
-        success, output = run_ffmpeg(ffmpeg_command, timeout=300)
+        result = subprocess.run(ffmpeg_command, check=True)
         print("ffmpeg command executed successfully.")
     except subprocess.CalledProcessError as e:
         print(f"ffmpeg command failed: {e}")
-
+    if result.returncode:
+        return name
+    else:
+        exit()
     # videos_folder_path = 'videoCreation/videos'
     # new_file_path = os.path.join(videos_folder_path, f"{name}.mp4")
 
@@ -140,7 +113,7 @@ def images_to_video(image_folder, avi_video_name, output_file, data_json, output
     # shutil.copy(output_file_path, new_file_path)
 
     # os.remove(avi_video_path) 
-    return name
+    
 
 
 
