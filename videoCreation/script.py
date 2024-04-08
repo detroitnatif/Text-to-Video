@@ -130,26 +130,26 @@ Narrator: "After simmering, serve hot, and enjoy your delectable stuffed cabbage
         ]
 
     )
-    # response = response.choices[0].message.content
+    response = response.choices[0].message.content
 
-    # data = narration.parse(response)
-    # narration.create(data, name, 'narration', api_key)
+    data = narration.parse(response)
+    narration.create(data, name, 'narration', api_key)
 
     
-    # with open(os.path.join(name, 'response.txt'), 'w') as f:
-    #     f.write(response)
+    with open(os.path.join(name, 'response.txt'), 'w') as f:
+        f.write(response)
 
-    # with open(os.path.join(name, 'data.json'), 'w') as f:
-    #     json.dump(data, f)
+    with open(os.path.join(name, 'data.json'), 'w') as f:
+        json.dump(data, f)
 
     with open(os.path.join('videoCreation', name, 'data.json'), 'r') as f:
         data_json = json.load(f)
 
 
-    # if not os.path.exists(os.path.join(name, 'images')):
-    #     os.makedirs(os.path.join(name, 'images'))
+    if not os.path.exists(os.path.join(name, 'images')):
+        os.makedirs(os.path.join(name, 'images'))
 
-    # images.create_from_data(data, name, api_key)
+    images.create_from_data(data, name, api_key)
 
     img_path = f"videoCreation/{name}/images"
     # imgs_paths = sorted(os.listdir(img_path))
