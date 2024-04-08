@@ -5,10 +5,10 @@ import narration
 import json
 import images
 import video
-
+import streamlit as st
 
 # load_dotenv()
-
+@st.cache(suppress_st_warning=True, allow_output_mutation=True, show_spinner=True)
 def run(prompt, api_key):
     # load_dotenv()
     client = OpenAI(api_key=api_key)
