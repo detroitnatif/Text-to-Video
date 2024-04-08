@@ -8,6 +8,7 @@ from pydub import AudioSegment
 import json
 import text
 import shutil
+import streamlit as st
 
 # Set the paths for ffmpeg and ffprobe
 ffmpeg_path = "/usr/bin/ffmpeg"
@@ -98,14 +99,12 @@ def images_to_video(image_folder, avi_video_name, output_file, data_json, output
     ffmpeg_command = ['ffmpeg', '-i', avi_video_path, '-i', full_narration_path, '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-c:a', 'aac', '-strict', '-experimental', '-shortest', output_file_path]  # Adjusted to use avi_video_path and output_file_path
 
     try:
-        result = subprocess.run(ffmpeg_command, check=True)
-        print("ffmpeg command executed successfully.")
-    except subprocess.CalledProcessError as e:
-        print(f"ffmpeg command failed: {e}")
-    if result.returncode:
-        return name
-    else:
-        exit()
+        result = subprocess.run(ffmpeg_command, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=100)
+        return name  # 300 seconds = 5 minutes
+    except subprocess.TimeoutExpired:
+        st.error("ffmpeg process took too long and was terminated.")
+
+  
     # videos_folder_path = 'videoCreation/videos'
     # new_file_path = os.path.join(videos_folder_path, f"{name}.mp4")
 
