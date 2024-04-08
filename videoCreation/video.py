@@ -73,7 +73,7 @@ def images_to_video(image_folder, avi_video_name, output_file, data_json, output
     - data_json: JSON data containing text items for narration.
     """
     wait_time = 1000
-    width, height = 1024, 1792
+    width, height = 1024, 1024
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
 
     avi_video_path = os.path.join(name, avi_video_name)  # Changed line
