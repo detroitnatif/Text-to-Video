@@ -151,7 +151,7 @@ Narrator: "After simmering, serve hot, and enjoy your delectable stuffed cabbage
 
     images.create_from_data(data, name, api_key)
 
-    img_path = f"videoCreation/{name}/images"
+    img_path = f"{name}/images"
     # imgs_paths = sorted(os.listdir(img_path))
     fps = 30 
     mp4 = f'cooking_with_captions_{name}.mp4'
