@@ -104,10 +104,10 @@ def run(prompt, api_key):
             },
             {
                 'role':'system',
-                'content': f''' below is a good example of what you should generate, of course changing it to fit {source_material}:
+                'content': f''' below is a good example of what you should generate, but changing all the details to be the ingredients from {source_material}:
 
 
-1)  [Background image: all the ingredients on a table from {source_material}]
+1)  [Background image: birds eye view of kitchen counter with ground beef, rice, onions, garlic, paprika, cumin]
 
 Narrator: "Here are all the ingredients you'll need: 1 pound ground beef, 2 cups rice, 3 onions , a clove of garlic, and 2 tablespoons of paprika "
 
