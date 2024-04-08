@@ -1,0 +1,60 @@
+[
+  {
+    "type": "image",
+    "description": "all the necessary ingredients laying on a kitchen counter"
+  },
+  {
+    "type": "text",
+    "content": "\"Give all the ingredients needed and their respective quantities before starting the cooking steps.\""
+  },
+  {
+    "type": "image",
+    "description": "Close-up of beef tenderloin steaks being seasoned with salt"
+  },
+  {
+    "type": "text",
+    "content": "\"Season the beef tenderloin steaks generously with salt on both sides.\""
+  },
+  {
+    "type": "image",
+    "description": "Black peppercorns being crushed and steaks pressed into them"
+  },
+  {
+    "type": "text",
+    "content": "\"Crush black peppercorns and press the steaks into them for even coating.\""
+  },
+  {
+    "type": "image",
+    "description": "Skillet with steaks being seared in butter"
+  },
+  {
+    "type": "text",
+    "content": "\"Sear the steaks in a hot skillet with melted butter for 4-5 minutes on each side.\""
+  },
+  { "type": "image", "description": "Flambe process with Cognac in a skillet" },
+  {
+    "type": "text",
+    "content": "\"Carefully flambe the steaks with Cognac in the skillet.\""
+  },
+  {
+    "type": "image",
+    "description": "Heavy cream being stirred into the skillet sauce"
+  },
+  {
+    "type": "text",
+    "content": "\"Stir in heavy cream and let the sauce simmer until slightly thickened.\""
+  },
+  {
+    "type": "image",
+    "description": "Steaks being coated with creamy peppercorn sauce"
+  },
+  {
+    "type": "text",
+    "content": "\"Coat the steaks with the creamy peppercorn sauce in the skillet.\""
+  },
+  { "type": "image", "description": "Plated Steak Au Poivre with side dishes" },
+  {
+    "type": "text",
+    "content": "\"Serve the Steak Au Poivre hot with your favorite sides. Enjoy this delicious and flavorful meal!\""
+  }
+]
