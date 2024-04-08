@@ -92,7 +92,7 @@ recipes = st.sidebar.selectbox(
 if recipes:
     current_dir = os.getcwd()
     formatted_recipes = recipes.lower().replace(" ", "_") + ".mp4"
-    path = os.path.join(current_dir, 'videos', formatted_recipes)
+    path = os.path.join(current_dir, 'videoCreation/videos', formatted_recipes)
     video_file = open(path, 'rb')
     video_bytes = video_file.read()
     video_placeholder.video(video_bytes)
