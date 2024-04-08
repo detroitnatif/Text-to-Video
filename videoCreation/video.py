@@ -110,6 +110,7 @@ def images_to_video(image_folder, avi_video_name, output_file, data_json, output
     shutil.copy(output_file_path, new_file_path)
 
     # os.remove(avi_video_path) 
+    return new_file_path
 
 
 
