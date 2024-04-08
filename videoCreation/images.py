@@ -20,7 +20,7 @@ def create_from_data(data, name, api_key="You must give an API key to use"):
 def generate(prompt="POV like youve got a GoPro on looking down while cutting cutting an onion", output_file='creation.webp', api_key="You must give an API key to use"):
     client = OpenAI(api_key=api_key)
     response =  client.images.generate(
-        model='dall-e-3',
+        model='dall-e-2',
         prompt='create POV images as if you were doing the action looking down doing the action, in a realistic photo style ' + prompt,
         size='1024x1792',
         quality='standard',
