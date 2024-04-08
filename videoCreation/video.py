@@ -103,14 +103,14 @@ def images_to_video(image_folder, avi_video_name, output_file, data_json, output
     except subprocess.CalledProcessError as e:
         print(f"ffmpeg command failed: {e}")
 
-    videos_folder_path = 'videoCreation/videos'
-    new_file_path = os.path.join(videos_folder_path, f"{name}.mp4")
+    # videos_folder_path = 'videoCreation/videos'
+    # new_file_path = os.path.join(videos_folder_path, f"{name}.mp4")
 
 # Copy the video file to the new location with the new filename
-    shutil.copy(output_file_path, new_file_path)
+    # shutil.copy(output_file_path, new_file_path)
 
     # os.remove(avi_video_path) 
-    return new_file_path
+    return 
 
 
 
