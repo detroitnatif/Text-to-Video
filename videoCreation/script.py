@@ -155,7 +155,7 @@ Narrator: "After simmering, serve hot, and enjoy your delectable stuffed cabbage
     # imgs_paths = sorted(os.listdir(img_path))
     fps = 30 
     mp4 = f'cooking_with_captions_{name}.mp4'
-    output_dir = f'{name}'
+    output_dir = f'videoCreation/{name}'
 
     video.images_to_video(img_path, 'video_no_sound.avi', 'video.mp4', data_json, output_dir, name, fps=30)
 
