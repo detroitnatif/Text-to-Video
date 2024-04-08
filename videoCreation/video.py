@@ -18,6 +18,37 @@ AudioSegment.converter = ffmpeg_path
 AudioSegment.ffprobe = ffprobe_path
 
 
+import subprocess
+import threading
+
+class FFmpegRunner(threading.Thread):
+    def __init__(self, command, timeout):
+        super().__init__()
+        self.command = command
+        self.timeout = timeout
+        self.process = None
+        self.success = False
+
+    def run(self):
+        self.process = subprocess.Popen(self.command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        try:
+            self.process.wait(timeout=self.timeout)
+            self.success = True
+        except subprocess.TimeoutExpired:
+            self.process.kill()
+            self.success = False
+
+    def run_ffmpeg(self):
+        self.start()
+        self.join(self.timeout + 10)  # Give a little extra time for cleanup if needed
+        if self.is_alive():
+            self.process.terminate()  # Ensure termination if still alive
+            self.join()
+        return self.success
+
+
+
+
 
 def get_audio_duration(audio_file):
     # Load the audio file
@@ -97,11 +128,21 @@ def images_to_video(image_folder, avi_video_name, output_file, data_json, output
     output_file_path = os.path.join(output_dir, output_file)  # Changed line
     ffmpeg_command = ['ffmpeg', '-i', avi_video_path, '-i', full_narration_path, '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-c:a', 'aac', '-strict', '-experimental', '-shortest', output_file_path]  # Adjusted to use avi_video_path and output_file_path
 
-    try:
-        subprocess.run(ffmpeg_command, check=True)
-        print("ffmpeg command executed successfully.")
-    except subprocess.CalledProcessError as e:
-        print(f"ffmpeg command failed: {e}")
+
+    # Usage
+   
+    runner = FFmpegRunner(ffmpeg_command, timeout=300)  # 300 seconds timeout
+
+    if runner.run_ffmpeg():
+        print("ffmpeg command completed successfully.")
+    else:
+        print("ffmpeg command was terminated due to timeout.")
+
+    # try:
+    #     subprocess.run(ffmpeg_command, check=True)
+    #     print("ffmpeg command executed successfully.")
+    # except subprocess.CalledProcessError as e:
+    #     print(f"ffmpeg command failed: {e}")
 
     # videos_folder_path = 'videoCreation/videos'
     # new_file_path = os.path.join(videos_folder_path, f"{name}.mp4")
