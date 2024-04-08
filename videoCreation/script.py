@@ -44,8 +44,8 @@ def run(prompt, api_key):
             messages=[
                 {
                     'role':'system',
-                    'content': ''' Your job is to give recipe with clear and straigtforward steps. 
-                    Skip the thematic answers and give as many numbered steps as needed of about 2 sentences each. Before the steps, give a list all the needed ingredients and quantities.
+                    'content': ''' Your job is to give a recipe with clear and straigtforward actions that is 4 steps . 
+                    Skip the thematic answers and give as many sentences needed to make the recipe 4 steps long. Before the steps, give a list all the needed ingredients and quantities.
                     '''
                 },
                 {
@@ -83,21 +83,21 @@ def run(prompt, api_key):
 
                 Narrator: "list all the ingredients from {source_material} and their respective amounts, making sure to keep this on the same line, never creating a new line between ingredients"
 
-                2) [Background image: Description of image first Ingredient and step]
+                2) [Background image: Description of first step and the ingredients involved]
 
                 Narrator: "replace this with A few sentences of the cooking step details"
 
-                3) [Background image: Description of image second Ingredient and step]
+                3) [Background image: Description of second step and ingredients involved]
 
                 Narrator: "replace this with How to do this step of cooking with details"
 
                 continue making the recipe in the above format for all the steps ...
 
-                4) [Background image: Description of image 3rd Ingredient and step]
+                4) [Background image: Description of third step and ingredients involved]
 
                 Narrator: "replace this with How to do this step of cooking with details"
 
-                5) 4) [Background image: Description of image 4th Ingredient and step]
+                5) 4) [Background image: Description of fourth step and ingredients involved]
 
                 Narrator: "replace this with How to do this step of cooking with details"
                 '''
