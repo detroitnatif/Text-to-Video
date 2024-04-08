@@ -74,7 +74,7 @@ def run(prompt, api_key):
                 emphasize the steps and not thematic presentation, 
                 30 seconds to 1 minute narration,
                 the narration you create will have a picture background for each step.
-                make the numbered list as long as you need to get the recipe in full. 
+                make the numbered list as of 5 steps getting the recipe in full. 
 
                 
                 respond with the following format with however many steps of the recipe:
@@ -93,8 +93,13 @@ def run(prompt, api_key):
 
                 continue making the recipe in the above format for all the steps ...
 
-                4) ...
-                5) ...
+                4) [Background image: Description of image 3rd Ingredient and step]
+
+                Narrator: "replace this with How to do this step of cooking with details"
+
+                5) 4) [Background image: Description of image 4th Ingredient and step]
+
+                Narrator: "replace this with How to do this step of cooking with details"
                 '''
             },
             {
