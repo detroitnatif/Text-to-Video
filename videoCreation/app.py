@@ -8,6 +8,7 @@ import script
 from time import sleep
 
 st.set_page_config(page_title='Text-to-Video')
+base_path = os.environ.get('OPENAI_SANDBOX_BASE_PATH', '')
 
 duke_blue = "#00539B"
 st.markdown(f"""
@@ -85,12 +86,12 @@ create_video_placeholder = st.empty()
 
 recipes = st.sidebar.selectbox(
     "Choose a generated recipe, or create your own!",
-    (None, "Indian Butter Chicken", "Fajitas", "Chinese Chicken", 'Falafel', 'Steak au Poivre')
+    (None, "Stuffed Cabbage", "Indian Butter Chicken", "Fajitas", "Chinese Chicken", 'Falafel', 'Steak au Poivre')
 )
 
 if recipes:
     formatted_recipes = recipes.lower().replace(" ", "_") + ".mp4"
-    path = 'videoCreation/videos/' + formatted_recipes
+    path = 'videos/' + formatted_recipes
     video_file = open(path, 'rb')
     video_bytes = video_file.read()
     video_placeholder.video(video_bytes)
