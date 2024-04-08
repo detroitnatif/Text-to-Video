@@ -77,7 +77,7 @@ def run(prompt, api_key):
                 make the numbered list as of 5 steps getting the recipe in full. 
 
                 
-                respond with the following format with however many steps of the recipe:
+                respond with the following format with 5 steps of the recipe:
 
                 1) [Background image: all ingredients from {source_material} laying on a kitchen counter]
 
