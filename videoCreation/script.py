@@ -8,7 +8,7 @@ import video
 import streamlit as st
 
 # load_dotenv()
-@st.cache(suppress_st_warning=True, allow_output_mutation=True, show_spinner=True)
+@st.cache_data()
 def run(prompt, api_key):
     # load_dotenv()
     client = OpenAI(api_key=api_key)
