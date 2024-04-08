@@ -19,34 +19,33 @@ AudioSegment.ffprobe = ffprobe_path
 
 
 import subprocess
-import threading
+import concurrent.futures
 
-class FFmpegRunner(threading.Thread):
-    def __init__(self, command, timeout):
-        super().__init__()
-        self.command = command
-        self.timeout = timeout
-        self.process = None
-        self.success = False
+def run_ffmpeg(command, timeout):
+    """
+    Runs an ffmpeg command with a specified timeout using concurrent futures for subprocess.run.
 
-    def run(self):
-        self.process = subprocess.Popen(self.command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    Parameters:
+    - command: The ffmpeg command to run as a list of arguments.
+    - timeout: Timeout in seconds.
+
+    Returns:
+    - success: Boolean indicating if the command completed successfully before the timeout.
+    - output: The output (stdout or stderr) from the ffmpeg command.
+    """
+    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+        future = executor.submit(subprocess.run, command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         try:
-            self.process.wait(timeout=self.timeout)
-            self.success = True
-        except subprocess.TimeoutExpired:
-            self.process.kill()
-            self.success = False
-
-    def run_ffmpeg(self):
-        self.start()
-        self.join(self.timeout + 10)  # Give a little extra time for cleanup if needed
-        if self.is_alive():
-            self.process.terminate()  # Ensure termination if still alive
-            self.join()
-        return self.success
-
-
+            result = future.result(timeout=timeout)
+            success = (result.returncode == 0)
+            output = result.stdout if result.stdout else result.stderr
+        except concurrent.futures.TimeoutError:
+            success = False
+            output = "ffmpeg command was terminated due to timeout."
+            # Attempt to cancel the future if it is still running.
+            future.cancel()
+    
+    return success, output
 
 
 
@@ -128,21 +127,11 @@ def images_to_video(image_folder, avi_video_name, output_file, data_json, output
     output_file_path = os.path.join(output_dir, output_file)  # Changed line
     ffmpeg_command = ['ffmpeg', '-i', avi_video_path, '-i', full_narration_path, '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-c:a', 'aac', '-strict', '-experimental', '-shortest', output_file_path]  # Adjusted to use avi_video_path and output_file_path
 
-
-    # Usage
-   
-    runner = FFmpegRunner(ffmpeg_command, timeout=300)  # 300 seconds timeout
-
-    if runner.run_ffmpeg():
-        print("ffmpeg command completed successfully.")
-    else:
-        print("ffmpeg command was terminated due to timeout.")
-
-    # try:
-    #     subprocess.run(ffmpeg_command, check=True)
-    #     print("ffmpeg command executed successfully.")
-    # except subprocess.CalledProcessError as e:
-    #     print(f"ffmpeg command failed: {e}")
+    try:
+        success, output = run_ffmpeg(ffmpeg_command, timeout=300)
+        print("ffmpeg command executed successfully.")
+    except subprocess.CalledProcessError as e:
+        print(f"ffmpeg command failed: {e}")
 
     # videos_folder_path = 'videoCreation/videos'
     # new_file_path = os.path.join(videos_folder_path, f"{name}.mp4")
