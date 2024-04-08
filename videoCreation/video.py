@@ -125,13 +125,15 @@ def images_to_video(image_folder, avi_video_name, output_file, data_json, output
     video.release()
 
     output_file_path = os.path.join(output_dir, output_file)  # Changed line
-    ffmpeg_command = ['ffmpeg', '-i', avi_video_path, '-i', full_narration_path, '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-c:a', 'aac', '-strict', '-experimental', '-shortest', output_file_path]  # Adjusted to use avi_video_path and output_file_path
 
-    try:
-        result = subprocess.run(ffmpeg_command, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=100)
-        return name  # 300 seconds = 5 minutes
-    except subprocess.TimeoutExpired:
-        st.error("ffmpeg process took too long and was terminated.")
+    merge_audio_video(avi_video_path, full_narration_path, output_file_path)
+    # ffmpeg_command = ['ffmpeg', '-i', avi_video_path, '-i', full_narration_path, '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-c:a', 'aac', '-strict', '-experimental', '-shortest', output_file_path]  # Adjusted to use avi_video_path and output_file_path
+
+    # try:
+    #     result = subprocess.run(ffmpeg_command, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=100)
+    #     return name  # 300 seconds = 5 minutes
+    # except subprocess.TimeoutExpired:
+    #     st.error("ffmpeg process took too long and was terminated.")
 
   
     # videos_folder_path = 'videoCreation/videos'
