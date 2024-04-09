@@ -90,11 +90,12 @@ recipes = st.sidebar.selectbox(
     (None, "Stuffed Cabbage", "Who was the first US president?", "Indian Butter Chicken", "Fajitas", "Chinese Chicken", 'Falafel', 'Steak au Poivre')
 )
 
-cleaned_recipes = tuple(s.replace('?', '') if isinstance(s, str) else s for s in recipes)
+
 
 if recipes:
     current_dir = os.getcwd()
-    formatted_recipes = cleaned_recipes.lower().replace(" ", "_") + ".mp4"
+    formatted_recipes = recipes.lower().replace(" ", "_").replace("?", "") + ".mp4"
+
     path = os.path.join(current_dir, 'videoCreation/videos', formatted_recipes)
     video_file = open(path, 'rb')
     video_bytes = video_file.read()
