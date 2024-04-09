@@ -125,7 +125,8 @@ if len(api_key) > 40:
                  pass
             
             if not success:
-                 st.markdown("<h3 style='color: black;'>Try again, all the chefs are busy</h3>")
+                  loading_message = st.empty() 
+                  loading_message.markdown("<h3 style='color: black;'>Try again, all the chefs are busy</h3>", unsafe_allow_html=True)
             elif success:
                 # if recipe_name is not None:
                 path = os.path.join(recipe_name, 'video.mp4')
