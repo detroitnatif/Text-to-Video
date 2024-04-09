@@ -87,7 +87,7 @@ download_placeholder = st.empty()
 
 recipes = st.sidebar.selectbox(
     "Choose a generated recipe, or create your own!",
-    (None, "Stuffed Cabbage", "Who was the first US president?", "Indian Butter Chicken", "Fajitas", "Chinese Chicken", 'Falafel', 'Steak au Poivre')
+    (None, "Stuffed Cabbage", "Who was the first US president?", "Indian Butter Chicken", "Fajitas", "Chinese Chicken", 'Birria Tacos', 'Falafel', 'Steak au Poivre')
 )
 
 
