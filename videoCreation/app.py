@@ -107,8 +107,10 @@ if recipes:
                        mime='video/mp4',
                        key='download_video_recipes')
 
-# create_video_placeholder.markdown("<h3 style='color: black;'>Create your own Video</h3>", unsafe_allow_html=True)
-# Now placing the API key input at the bottom
+
+
+success = False
+
 api_key = st.text_input("Enter your OpenAI API Key:")
 
 if len(api_key) > 40:
@@ -120,8 +122,11 @@ if len(api_key) > 40:
             try:
                 success, recipe_name = script.run(requested_recipe, api_key)
             except Exception as e:
-                 st.error("Try requesting again. all the chefs are busy")
-            if success:
+                 pass
+            
+            if not success:
+                 st.markdown("<h3 style='color: black;'>Your video is in the oven...</h3>")
+            elif success:
                 # if recipe_name is not None:
                 path = os.path.join(recipe_name, 'video.mp4')
                 video_file = open(path, 'rb')
