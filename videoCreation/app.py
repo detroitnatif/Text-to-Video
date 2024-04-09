@@ -82,7 +82,8 @@ st.markdown(f"""
 
 # Placeholders for later use
 video_placeholder = st.empty()
-create_video_placeholder = st.empty()
+download_placeholder = st.empty()
+
 
 recipes = st.sidebar.selectbox(
     "Choose a generated recipe, or create your own!",
@@ -97,7 +98,7 @@ if recipes:
     video_bytes = video_file.read()
     video_placeholder.video(video_bytes)
     
-    st.download_button(label="Download Video",
+    download_placeholder.download_button(label="Download Video",
                        data=video_bytes,
                        file_name=formatted_recipes,
                        mime='video/mp4',
@@ -116,7 +117,6 @@ if len(api_key) > 40:
 
             success, recipe_name = script.run(requested_recipe, api_key)
             if success:
-                st.write('finished')
                 # if recipe_name is not None:
                 path = os.path.join(recipe_name, 'video.mp4')
                 video_file = open(path, 'rb')
@@ -124,13 +124,13 @@ if len(api_key) > 40:
                 
                 loading_message.empty()  
                 
-                st.video(video_bytes)
+              
                 with open(path, 'rb') as video_file:
                     video_bytes = video_file.read()
                 video_placeholder.video(video_bytes)
 
-                st.download_button(label="Download Video",
+                download_placeholder.download_button(label="Download Video",
                                    data=video_bytes,
-                                   file_name="your_video.mp4",
+                                   file_name=f"recipe_name.mp4",
                                    mime='video/mp4',
                                     key='download_video_recipes')
