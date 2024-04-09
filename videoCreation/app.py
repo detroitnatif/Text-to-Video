@@ -114,8 +114,10 @@ if len(api_key) > 40:
     if requested_recipe:
             loading_message = st.empty() 
             loading_message.markdown("<h3 style='color: black;'>Your video is in the oven...</h3>", unsafe_allow_html=True)
-
-            success, recipe_name = script.run(requested_recipe, api_key)
+            try:
+                success, recipe_name = script.run(requested_recipe, api_key)
+            except Exception as e:
+                 st.error("Try requesting again. all the chefs are busy")
             if success:
                 # if recipe_name is not None:
                 path = os.path.join(recipe_name, 'video.mp4')
@@ -131,6 +133,6 @@ if len(api_key) > 40:
 
                 download_placeholder.download_button(label="Download Video",
                                    data=video_bytes,
-                                   file_name=f"recipe_name.mp4",
+                                   file_name=f"{recipe_name}.mp4",
                                    mime='video/mp4',
                                     key='download_video_recipes')
