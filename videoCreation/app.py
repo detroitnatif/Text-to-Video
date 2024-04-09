@@ -101,6 +101,11 @@ if recipes:
                                       data=video_bytes,
                                       file_name=formatted_recipes,
                                       mime='video/mp4')
+    
+    st.download_button(label="Download Video",
+                       data=video_bytes,
+                       file_name=formatted_recipes,
+                       mime='video/mp4')
 
 # create_video_placeholder.markdown("<h3 style='color: black;'>Create your own Video</h3>", unsafe_allow_html=True)
 # Now placing the API key input at the bottom
@@ -124,6 +129,10 @@ if len(api_key) > 40:
                 loading_message.empty()  
                 
                 st.video(video_bytes)
+                with open(path, 'rb') as video_file:
+                    video_bytes = video_file.read()
+                video_placeholder.video(video_bytes)
+
                 st.download_button(label="Download Video",
                                    data=video_bytes,
                                    file_name="your_video.mp4",
