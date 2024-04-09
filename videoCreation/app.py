@@ -125,7 +125,7 @@ if len(api_key) > 40:
                  pass
             
             if not success:
-                 st.markdown("<h3 style='color: black;'>Your video is in the oven...</h3>")
+                 st.markdown("<h3 style='color: black;'>Try again, all the chefs are busy</h3>")
             elif success:
                 # if recipe_name is not None:
                 path = os.path.join(recipe_name, 'video.mp4')
