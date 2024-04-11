@@ -87,7 +87,7 @@ download_placeholder = st.empty()
 
 recipes = st.sidebar.selectbox(
     "Choose a generated recipe, or create your own!",
-    (None, "Stuffed Cabbage", "Who was the first US president?", "Indian Butter Chicken", "Fajitas", "Chinese Chicken", 'Birria Tacos','Homeade Jam', 'Falafel', 'Steak au Poivre')
+    (None, "Stuffed Cabbage", "Who was the first US president?", "Indian Butter Chicken", "Fajitas", "Chinese Chicken", 'Birria Tacos',"Homeade Jam", 'Falafel', 'Steak au Poivre')
 )
 
 
@@ -97,7 +97,7 @@ if recipes:
     formatted_recipes = recipes.lower().replace(" ", "_").replace("?", "") + ".mp4"
 
 
-    # path = os.path.join(current_dir, 'videos', formatted_recipes)
+    # path = os.path.join(current_dir, 'videos', formatted_recipes) # LOCAL APP
     path = os.path.join(current_dir, 'videoCreation/videos', formatted_recipes)  # LIVE APP 
     video_file = open(path, 'rb')
     video_bytes = video_file.read()
