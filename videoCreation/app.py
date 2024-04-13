@@ -87,7 +87,7 @@ download_placeholder = st.empty()
 
 recipes = st.sidebar.selectbox(
     "Choose a generated recipe, or create your own!",
-    (None, "Stuffed Cabbage", 'Eggs Benedict', "Indian Butter Chicken", "Fajitas", "Chinese Chicken", 'Popcorn stove top', "Who was the first US president?", 'Birria Tacos',"Homeade Jam", 'Falafel', 'goat cheese salad', 'Steak au Poivre'),
+    (None, "Stuffed Cabbage", 'Eggs Benedict', "Indian Butter Chicken", 'Moroccan Cous Cous'"Fajitas", "Chinese Chicken", 'Popcorn stove top', "Who was the first US president?", 'Birria Tacos',"Homeade Jam", 'Falafel', 'goat cheese salad', 'Steak au Poivre'),
     format_func=lambda x: "Choose from the cookbook" if x is None else x
 )
 
