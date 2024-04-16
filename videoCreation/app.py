@@ -7,6 +7,10 @@ import os
 import script
 from time import sleep
 
+
+import logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 st.set_page_config(page_title='Text-to-Video', page_icon='🎥')
 base_path = os.environ.get('OPENAI_SANDBOX_BASE_PATH', '')
 

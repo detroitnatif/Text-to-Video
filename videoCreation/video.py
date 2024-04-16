@@ -19,8 +19,9 @@ ffprobe_path = "/usr/bin/ffprobe"
 AudioSegment.converter = ffmpeg_path
 AudioSegment.ffprobe = ffprobe_path
 
-import ffmpeg
-import os
+
+import logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def merge_audio_video(avi_video_path, full_narration_path, output_file_path):
     """
@@ -84,7 +85,7 @@ def images_to_video(image_folder, avi_video_name, output_file, data_json, output
     full_narration = AudioSegment.empty()
 
     text_items = [item["content"] for item in data_json if item["type"] == "text"]
-
+    logging.info("creating narration")
     for i, img in enumerate(image_paths):
         image1 = cv2.imread(os.path.join(image_folder, image_paths[i]))
 

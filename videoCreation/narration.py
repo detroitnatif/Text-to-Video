@@ -8,6 +8,9 @@ import subprocess
 import random
 import requests
 
+import logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 elevenlabs_key = os.environ.get("ELEVENLABS_API_KEY")
@@ -20,6 +23,7 @@ client = ElevenLabs(
 )
 
 def parse(narration):
+    logging.info("creating JSON")
     output = []
     paragraphs = narration.split('\n')
 
@@ -54,7 +58,7 @@ def create(data, name, output_folder, api_key):
         
         n += 1
         output_file = os.path.join(narration_file_path, f'narration_{n}.mp3')
-
+        logging.info(f"Created {output_file}")
         if narration_api == 'openai':
             openai.api_key = api_key
             audio = openai.audio.speech.create(
