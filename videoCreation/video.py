@@ -23,6 +23,8 @@ AudioSegment.ffprobe = ffprobe_path
 import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+
+# Changing output format to webm
 def merge_audio_video(avi_video_path, full_narration_path, output_file_path):
     """
     Merge AVI video and MP3 narration into a final MP4 video using ffmpeg-python.
@@ -40,7 +42,7 @@ def merge_audio_video(avi_video_path, full_narration_path, output_file_path):
         # Merge video and audio with the specified output format and codec options
         (
             ffmpeg
-            .output(video_input['v'], audio_input['a'], output_file_path, vcodec='copy', acodec='aac', strict='experimental', shortest=None)
+            .output(video_input['v'], audio_input['a'], output_file_path, vcodec='libvpx', acodec='libvorbis', strict='experimental', shortest=None)
             .run(overwrite_output=True)
         )
         print("Video processing completed successfully.")

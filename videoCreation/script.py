@@ -168,7 +168,7 @@ Narrator: "After simmering, serve hot, and enjoy your delectable stuffed cabbage
 
 
     
-    video.images_to_video(img_path, 'video_no_sound.avi', 'video.mp4', data_json, output_dir, name, fps=30)
+    video.images_to_video(img_path, 'video_no_sound.avi', 'video.webm', data_json, output_dir, name, fps=30)
 
     return (True, name)
 

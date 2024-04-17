@@ -6,6 +6,7 @@ from io import StringIO
 import os
 import script
 from time import sleep
+import ffmpeg
 
 
 import logging
@@ -13,6 +14,8 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 st.set_page_config(page_title='Text-to-Video', page_icon='🎥')
 base_path = os.environ.get('OPENAI_SANDBOX_BASE_PATH', '')
+
+
 
 duke_blue = "#00539B"
 st.markdown(f"""
@@ -125,7 +128,7 @@ if len(api_key) > 40:
 
     if requested_recipe:
             loading_message = st.empty() 
-            loading_message.markdown("<h3 style='color: black;'>Your video is in the oven...</h3>", unsafe_allow_html=True)
+            loading_message.markdown("<h3 style='color: black;'>Your video was sent to the kitchen...</h3>", unsafe_allow_html=True)
             try:
                 success, recipe_name = script.run(requested_recipe, api_key)
             except Exception as e:
@@ -136,7 +139,7 @@ if len(api_key) > 40:
                   loading_message.markdown("<h3 style='color: black;'>Try again, all the chefs are busy</h3>", unsafe_allow_html=True)
             elif success:
                 # if recipe_name is not None:
-                path = os.path.join(recipe_name, 'video.mp4')
+                path = os.path.join(recipe_name, 'video.webm')
                 video_file = open(path, 'rb')
                 video_bytes = video_file.read()
                 
@@ -149,6 +152,6 @@ if len(api_key) > 40:
 
                 download_placeholder.download_button(label="Download Video",
                                    data=video_bytes,
-                                   file_name=f"{recipe_name}.mp4",
+                                   file_name=f"{recipe_name}.webm",
                                    mime='video/mp4',
                                     key='download_custom_recipes')
