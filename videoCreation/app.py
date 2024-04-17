@@ -140,15 +140,14 @@ if len(api_key) > 40:
             elif success:
                 # if recipe_name is not None:
                 path = os.path.join(recipe_name, 'video.webm')
-                video_file = open(path, 'rb')
-                video_bytes = video_file.read()
                 
                 loading_message.empty()  
-                
-              
+               
                 with open(path, 'rb') as video_file:
                     video_bytes = video_file.read()
                 video_placeholder.video(video_bytes)
+              
+
 
                 download_placeholder.download_button(label="Download Video",
                                    data=video_bytes,
