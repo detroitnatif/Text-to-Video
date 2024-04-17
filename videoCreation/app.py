@@ -94,7 +94,7 @@ download_placeholder = st.empty()
 
 recipes = st.sidebar.selectbox(
     "Choose a generated recipe, or create your own!",
-    (None, "Stuffed Cabbage", 'Eggs Benedict', "Indian Butter Chicken", 'Moroccan Cous Cous', "Fajitas", "Chinese Chicken", 'Popcorn stove top', "Who was the first US president?", 'Birria Tacos',"Homeade Jam", 'Falafel', 'goat cheese salad', 'Steak au Poivre'),
+    (None, "Stuffed Cabbage", 'Eggs Benedict', "Indian Butter Chicken", 'Moroccan Cous Cous', 'Chicken Liver', "Fajitas", "Chinese Chicken", 'Popcorn stove top', "Who was the first US president?", 'Birria Tacos',"Homeade Jam", 'Falafel', 'goat cheese salad', 'Steak au Poivre'),
     format_func=lambda x: "Choose from the cookbook" if x is None else x
 )
 
@@ -102,7 +102,7 @@ recipes = st.sidebar.selectbox(
 
 if recipes:
     current_dir = os.getcwd()
-    formatted_recipes = recipes.lower().replace(" ", "_").replace("?", "") + ".mp4"
+    formatted_recipes = recipes.lower().replace(" ", "_").replace("?", "") + ".webm"
 
 
     # path = os.path.join(current_dir, 'videos', formatted_recipes) # LOCAL APP
@@ -114,7 +114,7 @@ if recipes:
     download_placeholder.download_button(label="Download Video",
                        data=video_bytes,
                        file_name=formatted_recipes,
-                       mime='video/mp4',
+                       mime='video/webm',
                        key='download_video_recipes')
 
 
