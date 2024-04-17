@@ -94,19 +94,21 @@ download_placeholder = st.empty()
 
 recipes = st.sidebar.selectbox(
     "Choose a generated recipe, or create your own!",
-    (None, "Stuffed Cabbage", 'Eggs Benedict', "Indian Butter Chicken", 'Moroccan Cous Cous', 'Chicken Liver', "Fajitas", "Chinese Chicken", 'Popcorn stove top', "Who was the first US president?", 'Birria Tacos',"Homeade Jam", 'Falafel', 'goat cheese salad', 'Steak au Poivre'),
+    (None, "Stuffed Cabbage", 'Eggs Benedict', "Indian Butter Chicken", 'Moroccan Cous Cous', 'Chicken Livers', "Fajitas", "Chinese Chicken", 'Popcorn stove top', "Who was the first US president?", 'Birria Tacos',"Homeade Jam", 'Falafel', 'goat cheese salad', 'Steak au Poivre'),
     format_func=lambda x: "Choose from the cookbook" if x is None else x
 )
+
 
 
 
 if recipes:
     current_dir = os.getcwd()
     formatted_recipes = recipes.lower().replace(" ", "_").replace("?", "") + ".webm"
+    logging.info(formatted_recipes)
 
 
-    # path = os.path.join(current_dir, 'videos', formatted_recipes) # LOCAL APP
-    path = os.path.join(current_dir, 'videoCreation/videos', formatted_recipes)  # LIVE APP 
+    path = os.path.join(current_dir, 'videos', formatted_recipes) # LOCAL APP
+    # path = os.path.join(current_dir, 'videoCreation/videos', formatted_recipes)  # LIVE APP 
     video_file = open(path, 'rb')
     video_bytes = video_file.read()
     video_placeholder.video(video_bytes)
@@ -137,9 +139,12 @@ if len(api_key) > 40:
             if not success:
                   loading_message = st.empty() 
                   loading_message.markdown("<h3 style='color: black;'>Try again, all the chefs are busy</h3>", unsafe_allow_html=True)
+                  logging.info("something went wrong, try again")
             elif success:
                 # if recipe_name is not None:
+
                 path = os.path.join(recipe_name, 'video.webm')
+                logging.info(path)
                 
                 loading_message.empty()  
                
