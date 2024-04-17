@@ -152,5 +152,5 @@ if len(api_key) > 40:
                 download_placeholder.download_button(label="Download Video",
                                    data=video_bytes,
                                    file_name=f"{recipe_name}.webm",
-                                   mime='video/mp4',
+                                   mime='video/webm',
                                     key='download_custom_recipes')
