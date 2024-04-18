@@ -35,27 +35,31 @@ def merge_audio_video(avi_video_path, full_narration_path, output_file_path, spe
     - output_file_path: Path for the output WebM video file.
     """
     try:
-        # Input streams
-        video_input = ffmpeg.input(avi_video_path)
-        audio_input = ffmpeg.input(full_narration_path)
-        audio_converted = audio_input.audio.filter('aformat', sample_fmts='fltp', sample_rates=44100, channel_layouts='stereo')
-        
-        # Merge and encode video
-        (
-            ffmpeg
-            .concat(video_input, audio_converted, v=1, a=1)
-            .output(
-                output_file_path,
-                vcodec='libvpx-vp9',
-                acodec='libvorbis',
-                video_bitrate='500k',
-                audio_bitrate='128k',
-                preset=speed ,
-                deadline='realtime'   # Added preset for controlling encoding speed
+            # Input streams
+            video_input = ffmpeg.input(avi_video_path)
+            audio_input = ffmpeg.input(full_narration_path)
+
+            # Convert audio to a compatible format for AAC
+            audio_converted = audio_input.audio.filter('aformat', sample_fmts='fltp', sample_rates=44100, channel_layouts='stereo')
+
+            # Merge video and audio with the specified output format and codec options
+            (
+                ffmpeg
+                .concat(video_input, audio_converted, v=1, a=1)
+                .output(
+                    output_file_path,
+                    vcodec='libx264',  # H.264 video codec
+                    acodec='aac',      # AAC audio codec
+                    audio_bitrate='128k',
+                    video_bitrate='500k',
+                    preset=speed,      # Control encoding speed
+                    movflags='faststart'  # Allows the video to begin playing before it is completely downloaded (good for web)
+                )
+                .run(overwrite_output=True)
             )
-            .run(overwrite_output=True))
-        print("Video processing completed successfully.")
-        logging.info('Successfully merged video and audio into WebM format.')
+            print("Video processing completed successfully.")
+            logging.info('Successfully merged video and audio into MP4 format.')
+
 
     except ffmpeg.Error as e:
         print("ffmpeg command failed with error:", e.stderr.decode())
@@ -186,5 +190,40 @@ def images_to_video(image_folder, avi_video_name, output_file, data_json, output
 
 
 
+# # Changing output format to webm WORKING
+# def merge_audio_video(avi_video_path, full_narration_path, output_file_path, speed='ultrafast'):
+#     """
+#     Merge AVI video and MP3 narration into a final WebM video using ffmpeg-python.
 
+#     Parameters:
+#     - avi_video_path: Path to the AVI video file.
+#     - full_narration_path: Path to the MP3 narration audio file.
+#     - output_file_path: Path for the output WebM video file.
+#     """
+#     try:
+#         # Input streams
+#         video_input = ffmpeg.input(avi_video_path)
+#         audio_input = ffmpeg.input(full_narration_path)
+#         audio_converted = audio_input.audio.filter('aformat', sample_fmts='fltp', sample_rates=44100, channel_layouts='stereo')
+        
+#         # Merge and encode video
+#         (
+#             ffmpeg
+#             .concat(video_input, audio_converted, v=1, a=1)
+#             .output(
+#                 output_file_path,
+#                 vcodec='libvpx-vp9',
+#                 acodec='libvorbis',
+#                 video_bitrate='500k',
+#                 audio_bitrate='128k',
+#                 preset=speed ,
+#                 deadline='realtime'   # Added preset for controlling encoding speed
+#             )
+#             .run(overwrite_output=True))
+#         print("Video processing completed successfully.")
+#         logging.info('Successfully merged video and audio into WebM format.')
+
+#     except ffmpeg.Error as e:
+#         print("ffmpeg command failed with error:", e.stderr.decode())
+#         logging.error('Merge failed: ' + e.stderr.decode())
 

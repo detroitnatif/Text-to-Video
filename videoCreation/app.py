@@ -123,7 +123,7 @@ if recipes:
     download_placeholder.download_button(label="Download Video",
                        data=video_bytes,
                        file_name=formatted_recipes,
-                       mime='video/webm',
+                       mime='video/mp4',
                        key='download_video_recipes')
 
 
@@ -150,7 +150,7 @@ if len(api_key) > 40:
             elif success:
                 # if recipe_name is not None:
 
-                path = os.path.join(recipe_name, 'video.webm')
+                path = os.path.join(recipe_name, 'video.mp4')
                 logging.info(path)
                 
                 loading_message.empty()  
@@ -163,6 +163,6 @@ if len(api_key) > 40:
 
                 download_placeholder.download_button(label="Download Video",
                                    data=video_bytes,
-                                   file_name=f"{recipe_name}.webm",
-                                   mime='video/webm',
+                                   file_name=f"{recipe_name}.mp4",
+                                   mime='video/mp4',
                                     key='download_custom_recipes')
