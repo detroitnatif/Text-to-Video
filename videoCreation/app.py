@@ -100,7 +100,7 @@ download_placeholder = st.empty()
 
 recipes = st.sidebar.selectbox(
     "Choose a generated recipe, or create your own!",
-    (None, "Stuffed Cabbage", 'Chicken Livers', 'Steak au Poivre'),
+    (None, 'Eggs Benedict', "Indian Butter Chicken", 'Fajitas','Steak au Poivre','Sweet Potato Fries', 'Chicken Livers'),
     format_func=lambda x: "Choose from the cookbook" if x is None else x
 )
 
