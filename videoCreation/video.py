@@ -27,34 +27,34 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 # Changing output format to webm
 def merge_audio_video(avi_video_path, full_narration_path, output_file_path):
     """
-    Merge AVI video and MP3 narration into a final MP4 video using ffmpeg-python.
+    Merge AVI video and MP3 narration into a final WebM video using ffmpeg-python.
 
     Parameters:
     - avi_video_path: Path to the AVI video file.
     - full_narration_path: Path to the MP3 narration audio file.
-    - output_file_path: Path for the output MP4 video file.
+    - output_file_path: Path for the output WebM video file.
     """
     try:
         # Input streams
         video_input = ffmpeg.input(avi_video_path)
         audio_input = ffmpeg.input(full_narration_path)
         
-        
-        # Ensure audio is converted to a compatible format and bitrate for Vorbis
+        # Ensure audio is converted to a compatible format for Vorbis
         audio_converted = audio_input.audio.filter('aformat', sample_fmts='fltp', sample_rates=44100, channel_layouts='stereo')
-        audio_converted = audio_converted.output('pipe:', format='vorbis', audio_bitrate='128k')
         
         # Merge video and audio with the specified output format and codec options
-        (
-            ffmpeg
-            .output(video_input['v'], audio_converted['a'], output_file_path, vcodec='libvpx', acodec='vorbis',
-                    video_bitrate='500k', audio_bitrate='128k', threads='auto', format='webm')
-            .run(overwrite_output=True)
-        )
-
+        ffmpeg.concat(
+            video_input, audio_converted, v=1, a=1
+        ).output(
+            output_file_path, vcodec='libvpx-vp9', acodec='libvorbis', video_bitrate='500k', audio_bitrate='128k'
+        ).run(overwrite_output=True)
+        
         print("Video processing completed successfully.")
+        logging.info('Successfully merged video and audio into WebM format.')
+
     except ffmpeg.Error as e:
-        print(f"ffmpeg command failed")
+        print("ffmpeg command failed with error:", e.stderr.decode())
+        logging.error('Merge failed: ' + e.stderr.decode())
 
 
 
