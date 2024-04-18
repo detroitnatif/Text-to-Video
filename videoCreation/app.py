@@ -100,7 +100,7 @@ download_placeholder = st.empty()
 
 recipes = st.sidebar.selectbox(
     "Choose a generated recipe, or create your own!",
-    (None, 'Eggs Benedict', "Indian Butter Chicken", 'Fajitas','Steak au Poivre','Sweet Potato Fries', 'Chicken Livers'),
+    (None, 'Stuffed Peppers','Eggs Benedict', "Butter Chicken", 'Fajitas','Steak au Poivre','Stuffed Cabbage', 'Chicken Livers'),
     format_func=lambda x: "Choose from the cookbook" if x is None else x
 )
 
@@ -110,7 +110,7 @@ recipes = st.sidebar.selectbox(
 
 if recipes:
     current_dir = os.getcwd()
-    formatted_recipes = recipes.lower().replace(" ", "_").replace("?", "") + ".webm"
+    formatted_recipes = recipes.lower().replace(" ", "_").replace("?", "") + ".mp4"
     logging.info(formatted_recipes)
 
 
@@ -137,7 +137,7 @@ if len(api_key) > 40:
 
     if requested_recipe:
             loading_message = st.empty() 
-            loading_message.markdown("<h3 style='color: black;'>Your video was sent to the kitchen...</h3>", unsafe_allow_html=True)
+            loading_message.markdown("<h3 style='color: black;'>Your recipe was sent to the kitchen...</h3>", unsafe_allow_html=True)
             try:
                 success, recipe_name = script.run(requested_recipe, api_key)
             except Exception as e:
