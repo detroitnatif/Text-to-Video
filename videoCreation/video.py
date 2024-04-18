@@ -25,7 +25,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 
 # Changing output format to webm
-def merge_audio_video(avi_video_path, full_narration_path, output_file_path):
+def merge_audio_video(avi_video_path, full_narration_path, output_file_path, speed='ultrafast'):
     """
     Merge AVI video and MP3 narration into a final WebM video using ffmpeg-python.
 
@@ -38,17 +38,22 @@ def merge_audio_video(avi_video_path, full_narration_path, output_file_path):
         # Input streams
         video_input = ffmpeg.input(avi_video_path)
         audio_input = ffmpeg.input(full_narration_path)
-        
-        # Ensure audio is converted to a compatible format for Vorbis
         audio_converted = audio_input.audio.filter('aformat', sample_fmts='fltp', sample_rates=44100, channel_layouts='stereo')
         
-        # Merge video and audio with the specified output format and codec options
-        ffmpeg.concat(
-            video_input, audio_converted, v=1, a=1
-        ).output(
-            output_file_path, vcodec='libvpx-vp9', acodec='libvorbis', video_bitrate='500k', audio_bitrate='128k'
-        ).run(overwrite_output=True)
-        
+        # Merge and encode video
+        (
+            ffmpeg
+            .concat(video_input, audio_converted, v=1, a=1)
+            .output(
+                output_file_path,
+                vcodec='libvpx-vp9',
+                acodec='libvorbis',
+                video_bitrate='500k',
+                audio_bitrate='128k',
+                preset=speed ,
+                deadline='realtime'   # Added preset for controlling encoding speed
+            )
+            .run(overwrite_output=True))
         print("Video processing completed successfully.")
         logging.info('Successfully merged video and audio into WebM format.')
 
