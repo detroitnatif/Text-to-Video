@@ -11,13 +11,13 @@ import shutil
 import streamlit as st
 import ffmpeg
 
-# Set the paths for ffmpeg and ffprobe
-ffmpeg_path = "/usr/bin/ffmpeg"
-ffprobe_path = "/usr/bin/ffprobe"
+# # Set the paths for ffmpeg and ffprobe
+# ffmpeg_path = "/usr/bin/ffmpeg"
+# ffprobe_path = "/usr/bin/ffprobe"
 
-# Configure pydub to use the specified ffmpeg and ffprobe
-AudioSegment.converter = ffmpeg_path
-AudioSegment.ffprobe = ffprobe_path
+# # Configure pydub to use the specified ffmpeg and ffprobe
+# AudioSegment.converter = ffmpeg_path
+# AudioSegment.ffprobe = ffprobe_path
 
 
 import logging
@@ -39,15 +39,22 @@ def merge_audio_video(avi_video_path, full_narration_path, output_file_path):
         video_input = ffmpeg.input(avi_video_path)
         audio_input = ffmpeg.input(full_narration_path)
         
+        
+        # Ensure audio is converted to a compatible format and bitrate for Vorbis
+        audio_converted = audio_input.audio.filter('aformat', sample_fmts='fltp', sample_rates=44100, channel_layouts='stereo')
+        audio_converted = audio_converted.output('pipe:', format='vorbis', audio_bitrate='128k')
+        
         # Merge video and audio with the specified output format and codec options
         (
             ffmpeg
-            .output(video_input['v'], audio_input['a'], output_file_path, vcodec='libvpx', acodec='libvorbis', strict='experimental', shortest=None)
+            .output(video_input['v'], audio_converted['a'], output_file_path, vcodec='libvpx', acodec='vorbis',
+                    video_bitrate='500k', audio_bitrate='128k', threads='auto', format='webm')
             .run(overwrite_output=True)
         )
+
         print("Video processing completed successfully.")
     except ffmpeg.Error as e:
-        print(f"ffmpeg command failed: {e.stderr.decode()}")
+        print(f"ffmpeg command failed")
 
 
 
@@ -99,7 +106,9 @@ def images_to_video(image_folder, avi_video_name, output_file, data_json, output
         image1 = cv2.resize(image1, (width, height))
         image2 = cv2.resize(image2, (width, height))
 
-        narration = os.path.join(name, 'narration', f'narration_{i+1}.mp3')  # Unchanged, assumes 'narration' is a subfolder in the current directory
+        current_dir = os.getcwd()
+
+        narration = os.path.join(current_dir, name, 'narration', f'narration_{i+1}.mp3')  # Unchanged, assumes 'narration' is a subfolder in the current directory
         full_narration += AudioSegment.from_file(narration)
         duration = get_audio_duration(narration)
 
@@ -115,9 +124,9 @@ def images_to_video(image_folder, avi_video_name, output_file, data_json, output
             # formatted_text = '\n'.join(f"\n- {point}" if not point.endswith('.') else f"\n- {point[:-1]}" for point in bullet_points)
 
             text.write_text(text_no_quotes,vertical_video_frame)
-
+            
             video.write(vertical_video_frame)
-        
+        logging.info(f'writing {img}')
         for alpha in np.linspace(0, 1, min(frames_for_image, fps)):
             blended_image = cv2.addWeighted(image1, 1 - alpha, image2, alpha, 0)
             video.write(blended_image)
@@ -128,7 +137,7 @@ def images_to_video(image_folder, avi_video_name, output_file, data_json, output
     video.release()
 
     output_file_path = os.path.join(output_dir, output_file)  # Changed line
-
+    logging.info("Shooting video")
     merge_audio_video(avi_video_path, full_narration_path, output_file_path)
     # ffmpeg_command = ['ffmpeg', '-i', avi_video_path, '-i', full_narration_path, '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-c:a', 'aac', '-strict', '-experimental', '-shortest', output_file_path]  # Adjusted to use avi_video_path and output_file_path
 
@@ -152,7 +161,8 @@ def images_to_video(image_folder, avi_video_name, output_file, data_json, output
 
 # # Example usage
     
-# file_path = '/Users/tylerklimas/Desktop/openaisandbox/videoCreation/falafel/data.json'
+# file_path = '/Users/tylerklimas/Desktop/openaisandbox/videoCreation/indian_butter_chicken/data.json'
+
 
 # # Open the file for reading
 # with open(file_path, 'r') as file:
@@ -161,13 +171,13 @@ def images_to_video(image_folder, avi_video_name, output_file, data_json, output
 
 
 
-# images_folder = '/Users/tylerklimas/Desktop/openaisandbox/videoCreation/falafel/images'  # Ensure this is the correct path to your images
+# images_folder = '/Users/tylerklimas/Desktop/openaisandbox/videoCreation/indian_butter_chicken/images'  # Ensure this is the correct path to your images
 # video_name = 'cooking_video_falafel.avi'  # Specify the full name including extension
 # output_dir = '/Users/tylerklimas/Desktop/openaisandbox/videoCreation/videos'
 # fps = 30  # Frames per second
-# name = 'falafel'
-# mp4 = f'{name}.mp4'
-# images_to_video(images_folder, video_name,mp4,data_json,output_dir,'falafel', fps)
+# name = 'indian_butter_chicken'
+# webm = f'{name}.webm'
+# images_to_video(images_folder, video_name,webm,data_json,output_dir,'indian_butter_chicken', fps)
 
 
 
